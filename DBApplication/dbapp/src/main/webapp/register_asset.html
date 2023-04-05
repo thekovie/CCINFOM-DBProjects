@@ -8,23 +8,52 @@
 </head>
 <body>
     <div class="container">
-        <div class="center">
+        <div class="center-forms">
+            <a class="return-link" href="index.html">< Return to Menu</a>
             <h1 class="h1-welcome">Assets</h1>
             <h2>Register your Asset</h2>
             <p style="color: crimson;">*Fill up the required fields</p>
             <form action="index.html">
-                <lavel for="asset_name">Asset Name:</lavel><br>
-                <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" required>
-                <br>
-                <lavel for="asset_type">Asset Type:</lavel><br>
-                <input type="text" id="asset_type" name="asset_type" placeholder="Asset Type" required>
-                <br>
+                <label for="asset_name">Name:</label><br>
+                <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" required><br>
+                <label for="asset_type">Asset Type:</label><br>
+                <input type="text" id="asset_type" name="asset_type" placeholder="Asset Type" required><br>
+                <label for="asset_description">Description:</label><br>
+                <textarea id="asset_description" name="asset_description" placeholder="Asset Description" rows="4" cols="50" required></textarea><br>
+                <label for="acquisition_date">Acquisition Date:</label><br>
+                <input type="date" id="acquisition_date" name="asset_date" required><br>
+                <label for="asset_value">Value:</label><br>
+                <input type="number" id="asset_value" name="asset_value" placeholder="Asset Value" required><br>
+                <label for="asset_status">Status:</label><br>
+                <select id="asset_status" name="asset_status">
+                    <option value="working">Working</option>
+                    <option value="deteriorated">Deteriorated</option>
+                    <option value="for_repair">For Repair</option>
+                    <option value="for_disposal">For Disposal</option>
+                    <option value="disposed">Disposed</option>
+                </select><br>
+                <label for="asset_loc_long">Location (Longitude):</label><br>
+                <input type="number" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" required><br>
+                <label for="asset_loc_lat">Location (Latitude):</label><br>
+                <input type="number" id="asset_loc_lat" name="asset_loc_lat" placeholder="Asset Location (Latitude)" required><br>
+                <label for="hoa_name">HOA Name:</label><br>
+                <select id = "hoa_name" name="hoa_name">
+                    <option value="HOA 1">HOA 1</option>
+                    <option value="HOA 2">HOA 2</option>
+                    <option value="HOA 3">HOA 3</option>
+                    <option value="HOA 4">HOA 4</option>
+                    <option value="HOA 5">HOA 5</option>
+                </select><br>
                 <input type="submit" value="Submit">
+                <input type="reset" value="Reset">
             </form>
         </div>
         <div class="logo-right">
             <img src="https://img.icons8.com/cotton/350/null/petition.png" alt="HOA Logo">
         </div>
     </div>
+    <footer>
+        <p>© CCINFOM Group 7</p>
+    </footer>
 </body>
 </html>
