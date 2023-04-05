@@ -16,14 +16,14 @@
 <body>
 <div class="container">
     <div class="center-forms">
-        <a class="return-link" href="index.html" class="back">< Return to Menu</a>
+        <a class="return-link" href="index.html">< Return to Menu</a>
         <h1 class="h1-welcome">Assets</h1>
         <h2>Update your Asset</h2>
         <p style="color: crimson;">*Fill up the required fields</p>
 
         <form>
             <label type="assetname" for="asset_name">Asset Name:</label><br>
-            <select id="asset_name" name="asset_name">
+            <select id="assets" name="asset_name">
                 <option value="asset1">Asset 1</option>
                 <option value="asset2">Asset 2</option>
                 <option value="asset3">Asset 3</option>
