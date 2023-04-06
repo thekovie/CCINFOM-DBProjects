@@ -1,5 +1,7 @@
 package assetmanagement;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.sql.*;
 
@@ -7,19 +9,24 @@ public class assets {
     public int asset_id;
     public String asset_name;
     public String asset_type;
+    public String asset_description;
+    public Date asset_acq_date;
+    public Boolean asset_rent = false;
+    public double asset_value;
     public String asset_status;
+    public double asset_longitude;
+    public double asset_latitude;
+    public String asset_hoa;
 
-    public ArrayList<Integer> asset_IdList = new ArrayList<Integer>();
-    public ArrayList<String> asset_NameList = new ArrayList<String>();
-    public ArrayList<String> asset_TypeList = new ArrayList<String>();
-    public ArrayList<String> asset_StatusList = new ArrayList<String>();
+
     public ArrayList<String> asset_HoaList = new ArrayList<String>();
+
 
     public assets() {
 
     }
 
-    public int register_asset() {
+    public boolean register_asset() {
         try {
             // Connect to database online
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -34,19 +41,40 @@ public class assets {
                 asset_id = rs.getInt("newID");
             }
 
-            // Save the new Asset
-            //pstmt = con.prepareStatement("INSERT INTO assets (asset_id, asset_name, type_asset, asset_status) VALUES (?, ?, ?, ?)");
+
+
+
+            // Insert new asset
+            pstmt = con.prepareStatement("INSERT INTO assets(asset_id, asset_name, asset_description, acquisition_date, forrent, asset_value, type_asset, status, loc_lattitude, loc_longiture, hoa_name) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            pstmt.setInt(1, asset_id);
+            pstmt.setString(2, asset_name);
+            pstmt.setString(3, asset_description);
+            pstmt.setDate(4, asset_acq_date);
+            pstmt.setBoolean(5, asset_rent);
+            pstmt.setDouble(6, asset_value);
+            pstmt.setString(7, asset_type);
+            pstmt.setString(8, asset_status);
+            pstmt.setDouble(9, asset_latitude);
+            pstmt.setDouble(10, asset_longitude);
+            pstmt.setString(11, asset_hoa);
+            pstmt.executeUpdate();
+
+            System.out.println("Asset Registered");
 
             pstmt.close();
             con.close();
+
+            return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return 0;
+        System.out.println("Asset Registration Failed");
+        return false;
     }
 
-    public void get_hoalist() {
+    public void load_hoalist() {
         try {
+
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
             System.out.println("Connected to database");

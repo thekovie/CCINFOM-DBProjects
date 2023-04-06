@@ -145,6 +145,7 @@ input[type="button"]{
     
 
 input[type="submit"], button {
+    font-family: Poppins, sans-serif;
     width: 30%;
     background-color: #3A98B9;
     color: white;

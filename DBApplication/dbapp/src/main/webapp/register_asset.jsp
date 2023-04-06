@@ -21,18 +21,18 @@
             <h1 class="h1-welcome">Assets</h1>
             <h2>Register your Asset</h2>
             <p style="color: crimson;">*Fill up the required fields</p>
-            <form action="index.html">
+            <form action="process_assets.jsp">
                 <label for="asset_name">Name:</label><br>
-                <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" required><br>
+                <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" maxlength="45" required><br>
                 <label for="asset_type">Asset Type:</label><br>
                 <select id="asset_type" name="asset_type">
                     <option value="property">Property</option>
                     <option value="equipment">Equipment</option>
-                    <option value="fnf">F&F</option>
+                    <option value="fnf">Furnitures & Fixtures</option>
                     <option value="Others">Others</option>
                 </select><br>
                 <label for="asset_description">Description:</label><br>
-                <textarea id="asset_description" name="asset_description" placeholder="Asset Description" rows="4" cols="50" required></textarea><br>
+                <textarea id="asset_description" name="asset_description" placeholder="Asset Description" rows="4" cols="50" maxlength="45" required></textarea><br>
                 <label for="acquisition_date">Acquisition Date:</label><br>
                 <input type="date" id="acquisition_date" name="asset_date" required><br>
                 <label for="asset_value">Value:</label><br>
@@ -43,7 +43,6 @@
                     <option value="deteriorated">Deteriorated</option>
                     <option value="for_repair">For Repair</option>
                     <option value="for_disposal">For Disposal</option>
-                    <option value="disposed">Disposed</option>
                 </select><br>
                 <label for="asset_loc_long">Location (Longitude):</label><br>
                 <input type="number" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" required><br>
@@ -55,7 +54,7 @@
                 <select id="hoa_name" name="hoa_name">
                     <%
                         assets a = new assets();
-                        a.get_hoalist();
+                        a.load_hoalist();
                         for (String s : a.asset_HoaList) {
                     %>
                     <option value="<%=s%>"><%=s%></option>
