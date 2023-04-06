@@ -6,12 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="java.util.*" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Update Asset</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="../resources/icons8-database-administrator-48.png" type="image/png">
+    <link rel="icon" href="https://img.icons8.com/fluency/48/null/data-configuration.png" type="image/png">
 </head>
 <body>
 <div class="container">

@@ -1,10 +1,18 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: johnn
+  Date: 06/04/2023
+  Time: 5:17 pm
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@page import="java.util.*, java.sql.*, assetmanagement.*" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Register Asset</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="../resources/icons8-database-administrator-48.png" type="image/png">
+    <link rel="icon" href="https://img.icons8.com/fluency/48/null/data-configuration.png" type="image/png">
 </head>
 <body>
     <div class="container">
@@ -17,7 +25,12 @@
                 <label for="asset_name">Name:</label><br>
                 <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" required><br>
                 <label for="asset_type">Asset Type:</label><br>
-                <input type="text" id="asset_type" name="asset_type" placeholder="Asset Type" required><br>
+                <select id="asset_type" name="asset_type">
+                    <option value="property">Property</option>
+                    <option value="equipment">Equipment</option>
+                    <option value="fnf">F&F</option>
+                    <option value="Others">Others</option>
+                </select><br>
                 <label for="asset_description">Description:</label><br>
                 <textarea id="asset_description" name="asset_description" placeholder="Asset Description" rows="4" cols="50" required></textarea><br>
                 <label for="acquisition_date">Acquisition Date:</label><br>
@@ -36,13 +49,19 @@
                 <input type="number" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" required><br>
                 <label for="asset_loc_lat">Location (Latitude):</label><br>
                 <input type="number" id="asset_loc_lat" name="asset_loc_lat" placeholder="Asset Location (Latitude)" required><br>
-                <label for="hoa_name">HOA Name:</label><br>
-                <select id = "hoa_name" name="hoa_name">
-                    <option value="HOA 1">HOA 1</option>
-                    <option value="HOA 2">HOA 2</option>
-                    <option value="HOA 3">HOA 3</option>
-                    <option value="HOA 4">HOA 4</option>
-                    <option value="HOA 5">HOA 5</option>
+
+                <label for="hoa_name">Select HOA:</label><br>
+                <jsp:useBean id="hoa_select" class="assetmanagement.assets" scope="session"/>
+                <select id="hoa_name" name="hoa_name">
+                    <%
+                        assets a = new assets();
+                        a.get_hoalist();
+                        for (String s : a.asset_HoaList) {
+                    %>
+                    <option value="<%=s%>"><%=s%></option>
+                    <%
+                        }
+                    %>
                 </select><br>
                 <input type="submit" value="Submit">
                 <input type="reset" value="Reset">
