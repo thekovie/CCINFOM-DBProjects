@@ -45,9 +45,9 @@
                     <option value="for_disposal">For Disposal</option>
                 </select><br>
                 <label for="asset_loc_long">Location (Longitude):</label><br>
-                <input type="number" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" required><br>
+                <input type="text" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" maxlength="8" required><br>
                 <label for="asset_loc_lat">Location (Latitude):</label><br>
-                <input type="number" id="asset_loc_lat" name="asset_loc_lat" placeholder="Asset Location (Latitude)" required><br>
+                <input type="text" id="asset_loc_lat" name="asset_loc_lat" placeholder="Asset Location (Latitude)" maxlength="8" required><br>
 
                 <label for="hoa_name">Select HOA:</label><br>
                 <jsp:useBean id="hoa_select" class="assetmanagement.assets" scope="session"/>

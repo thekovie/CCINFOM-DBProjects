@@ -39,7 +39,7 @@
             case "working": assetStatus = "W"; break;
             case "deteriorated": assetStatus = "D"; break;
             case "for_repair": assetStatus = "P"; break;
-            case "for_Disposal": assetStatus = "S"; break;
+            case "for_disposal": assetStatus = "S"; break;
             case "disposed": assetStatus = "X"; break;
         }
 
@@ -67,11 +67,14 @@
           %>
           <h1 class="h1-welcome" style="color: rgba(28, 166, 25, 0.737);">Registration Successful!</h1>
           <p>Your registration process is complete!</p>
+          <p><b>Registered Asset ID: </b><%=asset.asset_id%></p>
           <%
               } else {
           %>
           <h1 class="h1-welcome" style="color: crimson;">Registration Unsuccessful!</h1>
           <p>There was an error with your registration process. Please try again.</p>
+            <p><b>Error Message:</b></p>
+            <p style="font-size: small"><%=asset.error_msg%></p>
           <%
               }
           %>
