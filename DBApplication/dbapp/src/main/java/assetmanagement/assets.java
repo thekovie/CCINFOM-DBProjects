@@ -266,7 +266,7 @@ public class assets {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE asset_id NOT IN(SELECT asset_id FROM asset_transactions)");
+            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE asset_id NOT IN(SELECT asset_id FROM asset_transactions) AND asset_id NOT IN(SELECT enclosing_asset FROM assets WHERE enclosing_asset IN(SELECT asset_id FROM assets))");
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {

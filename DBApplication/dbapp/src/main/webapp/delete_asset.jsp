@@ -22,7 +22,7 @@
     <a class="return-link" href="index.html">< Return to Menu</a>
     <h1 class="h1-welcome">Assets</h1>
     <h2>Delete Assets</h2>
-    <p><b>Note:</b><br> The listed assets below are limited to<br> assets that had <u>no transactions yet</u>.</p>
+    <p><b>Note:</b><br> The listed assets below are limited to<br> assets that have <u>no transactions yet or <br>properties that have no encasing assets</u>.</p>
     <form action="process_del_assets.jsp">
       <label for="asset_select_label">Select Asset:</label><br>
       <select id="asset_select" name="asset_select">
