@@ -18,11 +18,9 @@ public class assets {
     public double asset_longitude;
     public double asset_latitude;
     public String asset_hoa;
-    public int asset_room;
     public String error_msg;
     public String asset_rent_status;
     public String asset_room_id;
-    public Integer nullVal = null;
 
 
     public ArrayList<String> asset_HoaList = new ArrayList<String>();
@@ -69,7 +67,6 @@ public class assets {
                 pstmt.setNull(12, Types.INTEGER);
             } else {
                 pstmt.setInt(12, Integer.parseInt(asset_room_id));
-                asset_room = Integer.parseInt(asset_room_id);
             }
             pstmt.executeUpdate();
 
@@ -112,7 +109,6 @@ public class assets {
                 pstmt.setNull(11, Types.INTEGER);
             } else {
                 pstmt.setInt(11, Integer.parseInt(asset_room_id));
-                asset_room = Integer.parseInt(asset_room_id);
             }
             pstmt.setInt(12, asset_id);
 
@@ -205,6 +201,7 @@ public class assets {
                 asset_latitude = rs.getDouble("loc_lattitude");
                 asset_longitude = rs.getDouble("loc_longiture");
                 asset_hoa = rs.getString("hoa_name");
+                asset_room_id = rs.getString("enclosing_asset");
             }
 
             switch(asset_type) {
@@ -226,6 +223,10 @@ public class assets {
                 asset_rent_status = "for_rent";
             } else {
                 asset_rent_status = "not_forrent";
+            }
+
+            if (asset_room_id == null) {
+                asset_room_id = "null";
             }
 
             pstmt.close();

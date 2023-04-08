@@ -91,13 +91,13 @@
             <label for="select_room">Select Room:</label><br>
             <jsp:useBean id="room_select" class="assetmanagement.assets" scope="session"/>
             <select id="select_room" name="select_room">
-                <option value="null">No room selected</option>
+                <option value="null" <% if (a.asset_room_id.equals("null")) {%> selected <% } %>>No room selected</option>
                 <%
                     assets c = new assets();
                     c.load_rooms();
                     for (int i = 0; i < c.asset_selectList.size(); i++) {
                 %>
-                <option value="<%=c.asset_idList.get(i)%>"><%=c.asset_selectList.get(i)%></option>
+                <option value="<%=c.asset_idList.get(i)%>" <% if (a.asset_room_id.equals(c.asset_idList.get(i))) {%> selected <% } %>><%=c.asset_selectList.get(i)%></option>
                 <%
                     }
                 %>
