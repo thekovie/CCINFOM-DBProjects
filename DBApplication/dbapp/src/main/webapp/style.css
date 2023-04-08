@@ -137,6 +137,17 @@ input[type="button"]{
     cursor: pointer;
 }
 
+input[type="radio"] {
+    width: 7%;
+    background-color: #3A98B9;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1800px) and (min-width: 800px) {
     .logo-right {
         display: none;

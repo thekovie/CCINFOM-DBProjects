@@ -161,10 +161,6 @@ public class assets {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
-        for (int i = 0; i < asset_selectList.size(); i++) {
-            System.out.println(asset_idList.get(i));
-        }
     }
 
     public void load_assetinfo(String assetId) {
@@ -207,6 +203,7 @@ public class assets {
                 case "D": asset_status = "deteriorated"; break;
                 case "P": asset_status = "for_repair"; break;
                 case "S": asset_status = "for_disposal"; break;
+                case "X": asset_status = "disposed"; break;
             }
 
             if (asset_rent == true) {
@@ -229,6 +226,14 @@ public class assets {
 
     public String getErrorMessage() {
         return error_msg;
+    }
+
+    public Boolean isDisposed() {
+        if (asset_status.equals("disposed")) {
+            return true;
+        } else {
+            return false;
+        }
     }
     public static void main(String args[]) {
 //        assets a = new assets();
