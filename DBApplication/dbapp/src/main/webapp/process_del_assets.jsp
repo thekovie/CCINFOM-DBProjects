@@ -13,6 +13,7 @@
 <head>
     <title>Delete Asset</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <link rel="icon" href="https://img.icons8.com/fluency/48/null/data-configuration.png" type="image/png">
 </head>
 <body>
