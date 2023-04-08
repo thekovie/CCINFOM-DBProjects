@@ -42,7 +42,7 @@
                     <option value="not_forrent">Not For Rent</option>
                 </select><br>
                 <label for="asset_value">Value:</label><br>
-                <input type="number" id="asset_value" name="asset_value" placeholder="Asset Value" required><br>
+                <input type="number" id="asset_value" name="asset_value" placeholder="Asset Value" min="0" required><br>
                 <label for="asset_status">Status:</label><br>
                 <select id="asset_status" name="asset_status" required>
                     <option value="working">Working</option>
