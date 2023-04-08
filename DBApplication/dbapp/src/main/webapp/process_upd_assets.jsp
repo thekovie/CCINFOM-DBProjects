@@ -29,6 +29,10 @@
     double loc_lat = Double.parseDouble(request.getParameter("asset_loc_lat"));
     String hoaName = request.getParameter("hoa_name");
     String rentStats = request.getParameter("rent_status");
+    String roomName = request.getParameter("select_room");
+
+
+
 
     switch(assetType) {
         case "property": assetType = "P"; break;
@@ -48,7 +52,7 @@
     Boolean rent_status = false;
     switch(rentStats) {
         case "rented": rent_status = true; break;
-        case "not_rented": rent_status = false; break;
+        case "not_forrent": rent_status = false; break;
     }
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -66,6 +70,7 @@
     asset.asset_latitude = loc_lat;
     asset.asset_hoa = hoaName;
     asset.asset_rent = rent_status;
+    asset.asset_room_id = roomName;
 
     Boolean check = asset.update_asset();
 %>

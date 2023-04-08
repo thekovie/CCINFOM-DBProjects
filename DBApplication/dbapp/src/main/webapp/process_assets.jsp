@@ -22,11 +22,19 @@
         String assetType = request.getParameter("asset_type");
         String assetDesc = request.getParameter("asset_description");
         String acqDateString = request.getParameter("asset_date");
+        String rentStatus = request.getParameter("rent_status");
         double assetValue = Double.parseDouble(request.getParameter("asset_value"));
         String assetStatus = request.getParameter("asset_status");
         double loc_long = Double.parseDouble(request.getParameter("asset_loc_long"));
         double loc_lat = Double.parseDouble(request.getParameter("asset_loc_lat"));
         String hoaName = request.getParameter("hoa_name");
+        String roomName = request.getParameter("select_room");
+
+        Boolean rentStatusBool = false;
+        if (rentStatus.equals("for_rent")) {
+            rentStatusBool = true;
+        }
+
 
         switch(assetType) {
             case "property": assetType = "P"; break;
@@ -51,11 +59,13 @@
         asset.asset_type = assetType;
         asset.asset_description = assetDesc;
         asset.asset_acq_date = acqDate;
+        asset.asset_rent = rentStatusBool;
         asset.asset_value = assetValue;
         asset.asset_status = assetStatus;
         asset.asset_longitude = loc_long;
         asset.asset_latitude = loc_lat;
         asset.asset_hoa = hoaName;
+        asset.asset_room_id = roomName;
 
         Boolean check = asset.register_asset();
     %>

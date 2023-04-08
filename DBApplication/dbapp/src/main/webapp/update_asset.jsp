@@ -54,8 +54,8 @@
             <input type="date" id="acquisition_date" name="asset_date" value="<%=a.asset_acq_date%>" <% if (a.isDisposed()) { %> disabled <% } else { %> required <% } %>><br>
             <labal for="rent_status">Rent Status:</labal><br>
             <select id="rent_status" name="rent_status" <% if (a.isDisposed()) { %> disabled <% } else { %> required <% } %>>
-                <option value="rented" <% if (a.asset_rent_status.equals("rented")) {%> selected <% } %>>Rented</option>
-                <option value="not_rented" <% if (a.asset_rent_status.equals("not_rented")) {%> selected <% } %>>Not Rented</option>
+                <option value="for_rent" <% if (a.asset_rent_status.equals("rented")) {%> selected <% } %>>For Rent</option>
+                <option value="not_forrent" <% if (a.asset_rent_status.equals("not_forrent")) {%> selected <% } %>>Not For Rent</option>
             </select><br>
             <label for="asset_value">Value:</label><br>
             <input type="number" id="asset_value" name="asset_value" placeholder="Asset Value" value="<%=a.asset_value%>" <% if (a.isDisposed()) { %> disabled <% } else { %> required <% } %>><br>
@@ -88,6 +88,20 @@
             <%
                 if (!a.isDisposed()) {
             %>
+            <label for="select_room">Select Room:</label><br>
+            <jsp:useBean id="room_select" class="assetmanagement.assets" scope="session"/>
+            <select id="select_room" name="select_room">
+                <option value="null">No room selected</option>
+                <%
+                    assets c = new assets();
+                    c.load_rooms();
+                    for (int i = 0; i < c.asset_selectList.size(); i++) {
+                %>
+                <option value="<%=c.asset_idList.get(i)%>"><%=c.asset_selectList.get(i)%></option>
+                <%
+                    }
+                %>
+            </select><br>
             <input type="submit" value="Submit">
             <input type="reset" value="Reset">
             <%

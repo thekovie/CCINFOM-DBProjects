@@ -25,7 +25,7 @@
                 <label for="asset_name">Name:</label><br>
                 <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" maxlength="45" required><br>
                 <label for="asset_type">Asset Type:</label><br>
-                <select id="asset_type" name="asset_type">
+                <select id="asset_type" name="asset_type" required>
                     <option value="property">Property</option>
                     <option value="equipment">Equipment</option>
                     <option value="fnf">Furnitures & Fixtures</option>
@@ -35,10 +35,15 @@
                 <textarea id="asset_description" name="asset_description" placeholder="Asset Description" rows="4" cols="50" maxlength="45" required></textarea><br>
                 <label for="acquisition_date">Acquisition Date:</label><br>
                 <input type="date" id="acquisition_date" name="asset_date" required><br>
+                <label for ="rent_status">Rent Status:</label><br>
+                <select id="rent_status" name="rent_status" required>
+                    <option value="for_rent">For Rent</option>
+                    <option value="not_forrent">Not For Rent</option>
+                </select><br>
                 <label for="asset_value">Value:</label><br>
                 <input type="number" id="asset_value" name="asset_value" placeholder="Asset Value" required><br>
                 <label for="asset_status">Status:</label><br>
-                <select id="asset_status" name="asset_status">
+                <select id="asset_status" name="asset_status" required>
                     <option value="working">Working</option>
                     <option value="deteriorated">Deteriorated</option>
                     <option value="for_repair">For Repair</option>
@@ -51,13 +56,27 @@
 
                 <label for="hoa_name">Select HOA:</label><br>
                 <jsp:useBean id="hoa_select" class="assetmanagement.assets" scope="session"/>
-                <select id="hoa_name" name="hoa_name">
+                <select id="hoa_name" name="hoa_name" required>
                     <%
                         assets a = new assets();
                         a.load_hoalist();
                         for (String s : a.asset_HoaList) {
                     %>
                     <option value="<%=s%>"><%=s%></option>
+                    <%
+                        }
+                    %>
+                </select><br>
+                <label for="select_room">Select Room:</label><br>
+                <jsp:useBean id="room_select" class="assetmanagement.assets" scope="session"/>
+                <select id="select_room" name="select_room">
+                    <option value="null">No room selected</option>
+                    <%
+                        assets b = new assets();
+                        b.load_rooms();
+                        for (int i = 0; i < b.asset_selectList.size(); i++) {
+                    %>
+                    <option value="<%=b.asset_idList.get(i)%>"><%=b.asset_selectList.get(i)%></option>
                     <%
                         }
                     %>

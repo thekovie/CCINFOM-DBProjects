@@ -16,13 +16,14 @@
     <link rel="icon" href="https://img.icons8.com/fluency/48/null/data-configuration.png" type="image/png">
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <div class="container">
     <div class="center-forms">
         <a class="return-link" href="index.html">< Return to Menu</a>
         <h1 class="h1-welcome">Assets</h1>
-        <h2>Modify Assets</h2>
+        <h2>Update Assets</h2>
 
-        <form method="post" action="">
+        <form action="update_asset.jsp">
             <label for="asset_select_label">Select Asset:</label><br>
             <select id="asset_select" name="asset_select">
                 <%
@@ -35,31 +36,8 @@
                     }
                 %>
             </select><br>
-            <label for="select_transact">Select Transaction:</label><br>
-            <label><input type="radio" id="update-button" name="action" value="update">Update</label><br>
-            <label><input type="radio" id="delete-button" name="action" value="delete">Delete</label><br>
-            <br>
             <input type="submit" value="Submit">
         </form>
-
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            // When radio is select, modify form action but verify if the user wants to really delete it
-            $(document).ready(function () {
-                $('input[type="radio"]').click(function () {
-                    if ($(this).attr("value") == "delete") {
-                        if (confirm("Selecting the delete option will delete the asset from the database.\nAre you sure you want to select this option?")) {
-                            $("form").attr("action", "delete_asset.jsp");
-                        } else {
-                            $("#delete-button").prop("checked", false);
-                        }
-                    }
-                    if ($(this).attr("value") == "update") {
-                        $("form").attr("action", "update_asset.jsp");
-                    }
-                });
-            });
-        </script>
     </div>
     <div class="logo-right">
         <img src="https://img.icons8.com/cotton/350/null/petition.png" alt="HOA Logo">
