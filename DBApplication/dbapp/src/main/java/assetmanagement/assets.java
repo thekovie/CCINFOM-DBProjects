@@ -114,6 +114,13 @@ public class assets {
 
             pstmt.executeUpdate();
 
+            // Remove enclosing asset if asset is disposed
+            if (asset_status.equals("X")) {
+                pstmt = con.prepareStatement("UPDATE assets SET enclosing_asset = NULL WHERE asset_id= ?");
+                pstmt.setInt(1, asset_id);
+                pstmt.executeUpdate();
+            }
+
             System.out.println("Asset Update Successfully");
 
             pstmt.close();
@@ -322,6 +329,43 @@ public class assets {
         } else {
             return false;
         }
+    }
+
+    public Boolean canForDisposal() {
+        Boolean canForDisposal = false;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            System.out.println("Connected to database");
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT enclosing_asset FROM assets WHERE asset_id = ?");
+            pstmt.setInt(1, asset_id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString("enclosing_asset") != null) {
+                    canForDisposal = true;
+                }
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return canForDisposal;
+    }
+
+    public Boolean canDispose() {
+        Boolean canDispose = false;
+
+        if (asset_status.equals("for_disposal")) {
+            canDispose = true;
+        }
+
+        return canDispose;
     }
     public static void main(String args[]) {
 //        assets a = new assets();

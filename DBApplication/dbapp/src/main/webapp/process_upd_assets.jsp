@@ -73,7 +73,19 @@
     asset.asset_rent = rent_status;
     asset.asset_room_id = roomName;
 
-    Boolean check = asset.update_asset();
+    Boolean canUpdate = true;
+    Boolean check = false;
+
+    if (assetStatus.equals("S")) {
+        if (!asset.canForDisposal()) {
+            canUpdate = false;
+            asset.error_msg = "Asset cannot be set to For Disposal as it is currently enclosing an asset.";
+        }
+    }
+
+    if (canUpdate) {
+        check = asset.update_asset();
+    }
 %>
 
 <div class="container">

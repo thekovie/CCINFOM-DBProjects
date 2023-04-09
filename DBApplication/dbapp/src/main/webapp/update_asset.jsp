@@ -66,7 +66,7 @@
                 <option value="deteriorated" <% if (a.asset_status.equals("deteriorated")) {%> selected <% } %>>Deteriorated</option>
                 <option value="for_repair" <% if (a.asset_status.equals("for_repair")) {%> selected <% } %>>For Repair</option>
                 <option value="for_disposal" <% if (a.asset_status.equals("for_disposal")) {%> selected <% } %>>For Disposal</option>
-                <option value="disposed" <% if (a.asset_status.equals("disposed")) {%> selected <% } %>>Disposed</option>
+                <option value="disposed" <% if (a.asset_status.equals("disposed")) {%> selected <% } %> <% if (!a.canDispose()) { %> disabled <% } %>>Disposed</option>
             </select><br>
             <label for="asset_loc_long">Location (Longitude):</label><br>
             <input type="text" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" maxlength="8" value="<%=a.asset_longitude%>" <% if (a.isDisposed()) { %> disabled <% } else { %> required <% } %>><br>
@@ -86,12 +86,9 @@
                     }
                 %>
             </select><br>
-            <%
-                if (!a.isDisposed()) {
-            %>
             <label for="select_room">Select Room:</label><br>
             <jsp:useBean id="room_select" class="assetmanagement.assets" scope="session"/>
-            <select id="select_room" name="select_room">
+            <select id="select_room" name="select_room" <% if (a.isDisposed()) { %> disabled <% } else { %> required <% } %>>
                 <option value="null" <% if (a.asset_room_id.equals("null")) {%> selected <% } %>>No room selected</option>
                 <%
                     assets c = new assets();
@@ -103,6 +100,9 @@
                     }
                 %>
             </select><br>
+            <%
+                if (!a.isDisposed()) {
+            %>
             <input type="submit" value="Submit">
             <input type="reset" value="Reset">
             <%

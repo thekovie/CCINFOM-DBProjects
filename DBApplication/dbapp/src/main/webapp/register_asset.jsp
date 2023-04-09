@@ -46,9 +46,9 @@
                 <label for="asset_status">Status:</label><br>
                 <select id="asset_status" name="asset_status" required>
                     <option value="working">Working</option>
-                    <option value="deteriorated">Deteriorated</option>
-                    <option value="for_repair">For Repair</option>
-                    <option value="for_disposal">For Disposal</option>
+                    <option value="deteriorated" disabled>Deteriorated</option>
+                    <option value="for_repair" disabled>For Repair</option>
+                    <option value="for_disposal" disabled>For Disposal</option>
                 </select><br>
                 <label for="asset_loc_long">Location (Longitude):</label><br>
                 <input type="text" id="asset_loc_long" name="asset_loc_long" placeholder="Asset Location (Longitude)" maxlength="8" required><br>
