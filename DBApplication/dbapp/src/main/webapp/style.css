@@ -137,7 +137,7 @@ input[type="button"]{
     cursor: pointer;
 }
 
-input[type="radio"] {
+input[type="checkbox"]  {
     width: 7%;
     background-color: #3A98B9;
     color: white;

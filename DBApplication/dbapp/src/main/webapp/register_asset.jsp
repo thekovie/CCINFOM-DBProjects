@@ -16,13 +16,16 @@
     <link rel="icon" href="https://img.icons8.com/fluency/48/null/data-configuration.png" type="image/png">
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <div class="container">
         <div class="center-forms">
             <a class="return-link" href="index.html">< Return to Menu</a>
             <h1 class="h1-welcome">Assets</h1>
-            <h2>Register your Asset</h2>
+            <h2>Register Asset</h2>
             <p style="color: crimson;">*Fill up the required fields</p>
-            <form action="process_assets.jsp">
+            <form method="post" id="reg_asset_form" action="process_assets.jsp">
+                <label for="reg_type">Is this a donation?</label><br>
+                <label><input type="checkbox" name="donation-check" id="donation_checkbox">Yes, this is a donation.</label><br><br>
                 <label for="asset_name">Name:</label><br>
                 <input type="text" id="asset_name" name="asset_name" placeholder="Asset Name" maxlength="45" required><br>
                 <label for="asset_type">Asset Type:</label><br>

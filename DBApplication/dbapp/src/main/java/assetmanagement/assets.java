@@ -7,20 +7,20 @@ import java.util.*;
 import java.sql.*;
 
 public class assets {
-    public int asset_id;
-    public String asset_name;
-    public String asset_type;
-    public String asset_description;
-    public Date asset_acq_date;
-    public Boolean asset_rent;
-    public double asset_value;
-    public String asset_status;
-    public double asset_longitude;
-    public double asset_latitude;
-    public String asset_hoa;
-    public String error_msg;
-    public String asset_rent_status;
-    public String asset_room_id;
+    public static int asset_id;
+    public static String asset_name;
+    public static String asset_type;
+    public static String asset_description;
+    public static Date asset_acq_date;
+    public static Boolean asset_rent;
+    public static double asset_value;
+    public static String asset_status;
+    public static double asset_longitude;
+    public static double asset_latitude;
+    public static String asset_hoa;
+    public static String error_msg;
+    public static String asset_rent_status;
+    public static String asset_room_id;
 
 
     public ArrayList<String> asset_HoaList = new ArrayList<String>();
@@ -34,7 +34,7 @@ public class assets {
 
     }
 
-    public boolean register_asset() {
+    public static boolean register_asset() {
         try {
             // Connect to database online
             Class.forName("com.mysql.cj.jdbc.Driver");
