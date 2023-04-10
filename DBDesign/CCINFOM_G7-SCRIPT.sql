@@ -1,9 +1,3 @@
--- MySQL Workbench Forward Engineering
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
 -- -----------------------------------------------------
 -- Schema HOADB
 -- -----------------------------------------------------
@@ -843,9 +837,9 @@ CREATE TABLE IF NOT EXISTS `HOADB`.`evidence` (
 ENGINE = InnoDB;
 
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+# SET SQL_MODE=@OLD_SQL_MODE;
+# SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+# SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
 -- Data for table `HOADB`.`ref_collectiondays`
@@ -1370,3 +1364,27 @@ INSERT INTO `HOADB`.`donation_pictures` (`donation_id`, `picturefile`) VALUES (6
 
 COMMIT;
 
+-- -----------------------------------------------------
+-- Data for table `HOADB`.`ref_ornumbers`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `HOADB`;
+INSERT INTO `HOADB`.`ref_ornumbers` (ornum) VALUES (3000031);
+INSERT INTO `HOADB`.`ref_ornumbers` (ornum) VALUES (3000032);
+INSERT INTO `HOADB`.`ref_ornumbers` (ornum) VALUES (3000033);
+INSERT INTO `HOADB`.`ref_ornumbers` (ornum) VALUES (3000034);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `HOADB`.`monthly_billing`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `HOADB`;
+INSERT INTO `HOADB`.`monthly_billing` (bill_id, month, year, generated_date, deduction, collection_day, regular_dues, unpaid, discount, total, resident_id) VALUES (3000031, 1, 2023, '2023-01-06', 500, 10, 400, 150, 0.2, 210, 9002);
+INSERT INTO `HOADB`.`monthly_billing` (bill_id, month, year, generated_date, deduction, collection_day, regular_dues, unpaid, discount, total, resident_id) VALUES (3000032, 2, 2023, '2023-02-06', 550, 10, 400, 220, 0.2, 214, 9005);
+INSERT INTO `HOADB`.`monthly_billing` (bill_id, month, year, generated_date, deduction, collection_day, regular_dues, unpaid, discount, total, resident_id) VALUES (3000033, 3, 2023, '2023-03-06', 600, 10, 500, 310, 0.2, 282, 9008);
+INSERT INTO `HOADB`.`monthly_billing` (bill_id, month, year, generated_date, deduction, collection_day, regular_dues, unpaid, discount, total, resident_id) VALUES (3000034, 4, 2023, '2023-04-06', 650, 10, 500, 190, 0.2, 248, 9009);
+
+COMMIT;
