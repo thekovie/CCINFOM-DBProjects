@@ -1134,6 +1134,7 @@ INSERT INTO `HOADB`.`officer` (`ho_id`, `position`, `start_date`, `end_date`, `e
 INSERT INTO `HOADB`.`officer` (`ho_id`, `position`, `start_date`, `end_date`, `election_date`, `availability_time`, `M`, `T`, `W`, `H`, `F`, `S`, `N`) VALUES (9009, 'Secretary', '2023-01-10', '2023-12-10', '2022-12-01', 'A', 0, 1, 0, 1, 0, 0, 1);
 INSERT INTO `HOADB`.`officer` (`ho_id`, `position`, `start_date`, `end_date`, `election_date`, `availability_time`, `M`, `T`, `W`, `H`, `F`, `S`, `N`) VALUES (9010, 'Treasurer', '2023-01-10', '2023-12-10', '2022-12-01', 'A', 0, 0, 0, 0, 0, 0, 0);
 INSERT INTO `HOADB`.`officer` (`ho_id`, `position`, `start_date`, `end_date`, `election_date`, `availability_time`, `M`, `T`, `W`, `H`, `F`, `S`, `N`) VALUES (9011, 'Auditor', '2022-12-10', '2023-12-10', '2022-12-01', 'M', 1, 1, 1, 1, 0, 1, 1);
+INSERT INTO `HOADB`.`officer` (`ho_id`, `position`, `start_date`, `end_date`, `election_date`, `availability_time`, `M`, `T`, `W`, `H`, `F`, `S`, `N`) VALUES (9012, 'Auditor', '2022-06-10', '2022-12-10', '2022-06-01', 'M', 1, 1, 1, 1, 0, 0, 1);
 
 COMMIT;
 
@@ -1399,5 +1400,17 @@ INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer,
 INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000032, '2023-02-20', 9018, 9004, 3000032, 'Full', 214);
 INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000033, '2023-03-13', 9019, 9004, 3000033, 'Full', 282);
 INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000034, '2023-04-12', 9020, 9010, 3000034, 'Full', 248);
+
+COMMIT;
+
+-- -----------------------------------------------------
+-- Data for table `HOADB`.`incident_report`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `HOADB`;
+INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1000, '2023-01-04', 'Broke private property', 500, 5, 9012, 3000031);
+INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1001, '2023-02-05', 'Broke public property', 550, 9, 9012, 3000032);
+INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1002, '2023-03-03', 'Overdue payments', 600, 7, 9011, 3000033);
+INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1003, '2023-04-03', 'Trespassed private property', 650, 6, 9011, 3000034);
 
 COMMIT;
