@@ -244,7 +244,7 @@ public class assets {
         }
     }
 
-    public Boolean delete_asset() {
+    public static Boolean delete_asset() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");

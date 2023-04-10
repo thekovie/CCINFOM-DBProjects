@@ -22,17 +22,16 @@
 <%
     String donorName = request.getParameter("donor_name");
     String donorAddress = request.getParameter("donor_address");
-    double donorAmount = Double.parseDouble(request.getParameter("donation_amount"));
-    String acceptingOfficer = request.getParameter("accepting_officer");
+    double donorAmount = Double.parseDouble(request.getParameter("donor_amount"));
+    int acceptingOfficer = Integer.parseInt(request.getParameter("accepting_officer"));
     String[] donationPics = request.getParameterValues("donation_pics[]");
 
 
     donate.donor_name = donorName;
     donate.donor_address = donorAddress;
     donate.donation_amount = donorAmount;
-    donate.accepting_officer = acceptingOfficer;
+    donate.accepting_officer_id = acceptingOfficer;
     donate.donation_pics.addAll(Arrays.asList(donationPics));
-
 
 
     Boolean check = donate.register_donation();

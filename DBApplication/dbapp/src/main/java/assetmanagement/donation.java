@@ -7,7 +7,10 @@ public class donation {
     public String donor_name;
     public String donor_address;
     public double donation_amount;
-    public String accepting_officer;
+    public int accepting_officer_id;
+
+    public officer accepting_officer;
+    public int donation_id;
 
     public ArrayList<officer> officer_list = new ArrayList<>();
     public ArrayList<String> donation_pics = new ArrayList<>();
@@ -32,14 +35,95 @@ public class donation {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
             System.out.println("Connected to database");
 
+            // get donation id
+            PreparedStatement pstmt = con.prepareStatement("SELECT MAX(donation_id) + 1 AS donationID FROM asset_donations");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                donation_id = rs.getInt("donationID");
+            }
+            list_officers();
+            // get accepting officer
+            for (officer o : officer_list) {
+                if (o.officer_id == accepting_officer_id) {
+                    accepting_officer = o;
+                    break;
+                }
+            }
+            String firstName = donor_name.split(" ")[0].toLowerCase();
 
+            // fill donors table
+            pstmt = con.prepareStatement("INSERT INTO donors (donorname, address) VALUES(?, ?)");
+            pstmt.setString(1, donor_name);
+            pstmt.setString(2, donor_address);
+            pstmt.executeUpdate();
+
+            // fill asset_donations table
+            pstmt = con.prepareStatement("INSERT INTO asset_donations (donation_id, donor_completename, donation_formfile, date_donation, accept_hoid, accept_position, accept_electiondate, isdeleted) VALUES(?, ?, ?, ?, ?, ?, ?, 0)");
+            pstmt.setInt(1, donation_id);
+            pstmt.setString(2, donor_name);
+            pstmt.setString(3, donation_id + firstName + ".pdf");
+            pstmt.setDate(4, assets.asset_acq_date);
+            pstmt.setInt(5, accepting_officer.officer_id);
+            pstmt.setString(6, accepting_officer.officer_position);
+            pstmt.setDate(7, accepting_officer.officer_elect_date);
+            pstmt.executeUpdate();
+
+            // fill donated_assets table
+            pstmt = con.prepareStatement("INSERT INTO donated_assets (donation_id, asset_id, amount_donated) VALUES(?, ?, ?)");
+            pstmt.setInt(1, donation_id);
+            pstmt.setInt(2, assets.asset_id);
+            pstmt.setDouble(3, donation_amount);
+            pstmt.executeUpdate();
+
+            // fill donation_pictures table
+            if (donation_pics.size() > 0)
+                for (String pic : donation_pics) {
+                    pstmt = con.prepareStatement("INSERT INTO donation_pictures (donation_id, picturefile) VALUES(?, ?)");
+                    pstmt.setInt(1, donation_id);
+                    pstmt.setString(2, donation_id + "-" + pic);
+                    pstmt.executeUpdate();
+                }
+
+            donation_status = true;
+            pstmt.close();
+            con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            assets.error_msg = e.getMessage();
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+                System.out.println("Connected to database");
+
+                PreparedStatement pstmt = con.prepareStatement("DELETE FROM donors WHERE donorname = ?");
+                pstmt.setString(1, donor_name);
+                pstmt.executeUpdate();
+
+                pstmt = con.prepareStatement("DELETE FROM asset_donations WHERE donation_id = ?");
+                pstmt.setInt(1, donation_id);
+                pstmt.executeUpdate();
+
+                pstmt = con.prepareStatement("DELETE FROM donated_assets WHERE donation_id = ?");
+                pstmt.setInt(1, donation_id);
+                pstmt.executeUpdate();
+
+                pstmt = con.prepareStatement("DELETE FROM donation_pictures WHERE donation_id = ?");
+                pstmt.setInt(1, donation_id);
+                pstmt.executeUpdate();
+
+                pstmt.close();
+                con.close();
+                assets.delete_asset();
+            }
+            catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         }
 
 
         return  reg_status && donation_status;
     }
+
 
     public void list_officers() {
         try {
@@ -58,7 +142,8 @@ public class donation {
                 o.officer_name = rs.getString("fullname");
                 officer_list.add(o);
             }
-
+            pstmt.close();
+            con.close();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
