@@ -1403,6 +1403,7 @@ INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer,
 
 COMMIT;
 
+
 -- -----------------------------------------------------
 -- Data for table `HOADB`.`incident_report`
 -- -----------------------------------------------------
@@ -1412,5 +1413,18 @@ INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc
 INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1001, '2023-02-05', 'Broke public property', 550, 9, 9012, 3000032);
 INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1002, '2023-03-03', 'Overdue payments', 600, 7, 9011, 3000033);
 INSERT INTO `HOADB`.`incident_report` (incident_id, incident_date, incident_disc, penalty, rule_no, hoa_officer, bill_id) VALUES (1003, '2023-04-03', 'Trespassed private property', 650, 6, 9011, 3000034);
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `HOADB`.`evidence`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `HOADB`;
+INSERT INTO `HOADB`.`evidence` (evidence_id, name, `desc`, date, accepting_officer, resident_id, incident_id) VALUES (7001, 'Broke private property', 'Photograph', '2023-01-04', 9012, 9002, 1000);
+INSERT INTO `HOADB`.`evidence` (evidence_id, name, `desc`, date, accepting_officer, resident_id, incident_id) VALUES (7002, 'Broke public property', 'Video', '2023-02-05', 9012, 9005, 1001);
+INSERT INTO `HOADB`.`evidence` (evidence_id, name, `desc`, date, accepting_officer, resident_id, incident_id) VALUES (7003, 'Overdue payments', 'Photograph', '2023-03-03', 9011, 9008, 1002);
+INSERT INTO `HOADB`.`evidence` (evidence_id, name, `desc`, date, accepting_officer, resident_id, incident_id) VALUES (7004, 'Trespassed private property', 'Alarm Trigger', '2023-04-03', 9011, 9009, 1003);
 
 COMMIT;
