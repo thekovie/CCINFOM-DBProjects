@@ -23,7 +23,7 @@
         <h1 class="h1-welcome">Donation</h1>
         <h2>Record your Donation</h2>
         <p style="color: crimson;">*Fill up the required fields</p>
-        <form action="#">
+        <form action="donation_process.jsp" method="post" onsubmit="return validateFilenames()">
             <h3>Donor Information</h3>
             <label for="donor_name">Full Name:</label><br>
             <input type="text" id="donor_name" name="donor_name" placeholder="Full Name" maxlength="45" required><br>
@@ -32,8 +32,12 @@
             <h3>Donation Information</h3>
             <label for="donor_amount">Amount Donated:</label><br>
             <input type="number" id="donor_amount" name="donor_amount" placeholder="Amount Donated" min="0" required><br>
-            <label for="donation_pic">Proof of Donation:</label><br>
-            <input type="text" id="donation_pic" name="donation_pic" placeholder="Proof of Donation (Ex: image.jpeg)" maxlength="45" required><br>
+            <div id="donate-proof-fields">
+                <label for="donation_pics">Proof of Donation:</label><br>
+                <input type="text" id="donation_pics" name="donation_pics[]" placeholder="Enter filename with image or PDF extension" maxlength="45" required>
+
+            </div>
+            <button type="button" onclick="addFilename()">Add Another File</button><br>
             <label for="accepting_officer">Accepting Officer:</label><br>
             <select id="accepting_officer" name="accepting_officer">
                 <%
@@ -50,6 +54,31 @@
             <input type="submit" value="Submit">
             <input type="reset" value="Reset">
         </form>
+        <script>
+            function addFilename() {
+                const container = document.getElementById("donate-proof-fields");
+                const newField = document.createElement("div");
+                newField.innerHTML = '<input type="text" name="donation_pics[]" placeholder="Enter filename with image or PDF extension" maxlength="45" required>\n' +
+                    '                <button type="button" id="remove_field" style="width: 8%; background-color: crimson;" onclick="removeField(this)">X</button>';
+                container.appendChild(newField);
+            }
+
+            function removeField(button) {
+                button.parentNode.remove();
+            }
+
+            function validateFilenames() {
+                const filenames = document.getElementsByName("donation_pics[]");
+                for (let i = 0; i < filenames.length; i++) {
+                    const ext = filenames[i].value.split('.').pop().toLowerCase();
+                    if (!["jpg", "jpeg", "png", "pdf"].includes(ext)) {
+                        alert("Invalid file extension. Please enter a valid image or PDF file.");
+                        return false;
+                    }
+                }
+                return true;
+            }
+        </script>
     </div>
     <div class="logo-right">
         <img src="https://img.icons8.com/cotton/350/null/petition.png" alt="HOA Logo">

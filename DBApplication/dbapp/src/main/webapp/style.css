@@ -126,6 +126,8 @@ input:focus {
     outline: none;
 }
 
+
+
 input[type="button"]{
     width: 10%;
     background-color: #3A98B9;
@@ -136,6 +138,8 @@ input[type="button"]{
     border-radius: 4px;
     cursor: pointer;
 }
+
+
 
 input[type="checkbox"]  {
     width: 7%;

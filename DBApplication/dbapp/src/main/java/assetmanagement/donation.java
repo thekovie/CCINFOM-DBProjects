@@ -6,15 +6,11 @@ import java.util.ArrayList;
 public class donation {
     public String donor_name;
     public String donor_address;
-    public String asset_donated;
-    public Date donation_date;
     public double donation_amount;
     public String accepting_officer;
 
-    public ArrayList<String> asset_nameList = new ArrayList<>();
-    public ArrayList<String> asset_idList = new ArrayList<>();
-    public ArrayList<String> asset_selectList = new ArrayList<>();
     public ArrayList<officer> officer_list = new ArrayList<>();
+    public ArrayList<String> donation_pics = new ArrayList<>();
 
     public class officer {
         public int officer_id;
