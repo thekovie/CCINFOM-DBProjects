@@ -1388,3 +1388,16 @@ INSERT INTO `HOADB`.`monthly_billing` (bill_id, month, year, generated_date, ded
 INSERT INTO `HOADB`.`monthly_billing` (bill_id, month, year, generated_date, deduction, collection_day, regular_dues, unpaid, discount, total, resident_id) VALUES (3000034, 4, 2023, '2023-04-06', 650, 10, 500, 190, 0.2, 248, 9009);
 
 COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `HOADB`.`bill_payment`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `HOADB`;
+INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000031, '2023-01-11', 9016, 9010, 3000031, 'Full', 210);
+INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000032, '2023-02-20', 9018, 9004, 3000032, 'Full', 214);
+INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000033, '2023-03-13', 9019, 9004, 3000033, 'Full', 282);
+INSERT INTO `HOADB`.`bill_payment` (orno, payment_date, residentid, hoa_officer, bill_id, payment_type, payment_amount) VALUES (3000034, '2023-04-12', 9020, 9010, 3000034, 'Full', 248);
+
+COMMIT;
