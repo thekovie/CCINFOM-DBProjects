@@ -32,7 +32,7 @@ public class donation {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             // get donation id
@@ -92,7 +92,7 @@ public class donation {
             assets.error_msg = e.getMessage();
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+                Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
                 System.out.println("Connected to database");
 
                 PreparedStatement pstmt = con.prepareStatement("DELETE FROM donors WHERE donorname = ?");
@@ -128,7 +128,7 @@ public class donation {
     public void list_officers() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT o.ho_id, o.position, o.election_date, CONCAT(p.firstname, ' ', p.lastname) AS fullname FROM officer o JOIN people p ON p.peopleid = o.ho_id");
