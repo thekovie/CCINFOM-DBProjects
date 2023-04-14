@@ -296,7 +296,8 @@ public class assets {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE type_asset = 'P'");
+            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE type_asset = 'P' AND hoa_name = ?");
+            pstmt.setString(1, asset_hoa);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {

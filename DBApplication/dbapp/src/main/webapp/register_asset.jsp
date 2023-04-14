@@ -73,6 +73,8 @@
                 </select><br>
                 <label for="select_room">Select Room:</label><br>
                 <jsp:useBean id="room_select" class="assetmanagement.assets" scope="session"/>
+<%--                Update load_rooms() implementation here--%>
+<%--                load_rooms() relies on the asset_hoa variable so assign mo sa on select--%>
                 <select id="select_room" name="select_room">
                     <option value="null">No room selected</option>
                     <%
