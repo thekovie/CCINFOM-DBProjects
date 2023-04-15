@@ -13,6 +13,7 @@ public class donation {
     public int donation_id;
     public String donation_asset;
 
+
     public ArrayList<officer> officer_list = new ArrayList<>();
     public ArrayList<String> donation_pics = new ArrayList<>();
     public ArrayList<donor> donor_list = new ArrayList<>();
@@ -179,7 +180,7 @@ public class donation {
         }
     }
 
-    public void load_donationinfo() {
+    public void load_donationlist() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
@@ -200,6 +201,60 @@ public class donation {
         }
     }
 
+    public void load_donationinfo(String donationId) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            PreparedStatement pstmt;
+            ResultSet rs;
+            // Get Donation Information
+            pstmt = con.prepareStatement("SELECT donation_id, accept_hoid, donor_completename FROM asset_donations WHERE donation_id = ?");
+            pstmt.setInt(1, Integer.parseInt(donationId));
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                donation_id = rs.getInt("donation_id");
+                accepting_officer_id = rs.getInt("accept_hoid");
+                donor_name = rs.getString("donor_completename");
+            }
+
+            // Get Donor Information
+            pstmt = con.prepareStatement("SELECT address FROM donors WHERE donorname = ?");
+            pstmt.setString(1, donor_name);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                donor_address = rs.getString("address");
+            }
+
+
+
+            pstmt = con.prepareStatement("SELECT amount_donated FROM donated_assets WHERE donation_id = ?");
+            pstmt.setInt(1, Integer.parseInt(donationId));
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                donation_amount = rs.getDouble("amount_donated");
+            }
+
+            // Get Donation Pictures
+            pstmt = con.prepareStatement("SELECT picturefile FROM donation_pictures WHERE donation_id = ?");
+            pstmt.setInt(1, Integer.parseInt(donationId));
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                donation_pics.add(rs.getString("picturefile"));
+            }
+
+            pstmt.close();
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
 
 
 
