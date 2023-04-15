@@ -25,10 +25,16 @@
     double donorAmount = Double.parseDouble(request.getParameter("donor_amount"));
     int acceptingOfficer = Integer.parseInt(request.getParameter("accepting_officer"));
     String[] donationPics = request.getParameterValues("donation_pics[]");
+    donation.existing_donator = request.getParameter("exist-checkbox") != null;
 
-
-    donate.donor_name = donorName;
-    donate.donor_address = donorAddress;
+    if (!donation.existing_donator) {
+        donate.donor_name = donorName;
+        donate.donor_address = donorAddress;
+    }
+    else {
+        donate.donor_name = request.getParameter("donor_id");
+        donate.donor_address = donate.get_donor_address(donate.donor_name);
+    }
     donate.donation_amount = donorAmount;
     donate.accepting_officer_id = acceptingOfficer;
     donate.donation_pics.addAll(Arrays.asList(donationPics));

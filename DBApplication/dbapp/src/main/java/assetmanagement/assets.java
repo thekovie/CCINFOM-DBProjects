@@ -49,13 +49,15 @@ public class assets {
             }
 
             // check if asset hoa name is the same as room hoa name
-            pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
-            pstmt.setInt(1, Integer.parseInt(asset_room_id));
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                if (!rs.getString("hoa_name").equals(asset_hoa)) {
-                    error_msg = "The enclosing asset doesn't belong to the same HOA";
-                    return false;
+            if (!asset_room_id.equals("null")) {
+                pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
+                pstmt.setInt(1, Integer.parseInt(asset_room_id));
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    if (!rs.getString("hoa_name").equals(asset_hoa)) {
+                        error_msg = "The enclosing asset doesn't belong to the same HOA as the asset";
+                        return false;
+                    }
                 }
             }
 
