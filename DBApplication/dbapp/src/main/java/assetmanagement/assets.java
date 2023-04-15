@@ -54,7 +54,7 @@ public class assets {
             rs = pstmt.executeQuery();
             while (rs.next()) {
                 if (!rs.getString("hoa_name").equals(asset_hoa)) {
-                    error_msg = "Asset HOA name does not match room HOA name";
+                    error_msg = "The enclosing asset doesn't belong to the same HOA";
                     return false;
                 }
             }
@@ -100,14 +100,16 @@ public class assets {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
+
+
             PreparedStatement pstmt;
             // check if asset hoa name is the same as room hoa name
             pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
             pstmt.setInt(1, Integer.parseInt(asset_room_id));
-            rs = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 if (!rs.getString("hoa_name").equals(asset_hoa)) {
-                    error_msg = "Asset HOA name does not match room HOA name";
+                    error_msg = "The enclosing asset doesn't belong to the same HOA.";
                     return false;
                 }
             }
@@ -316,16 +318,16 @@ public class assets {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE type_asset = 'P'/* AND hoa_name = ?*/");
-//            pstmt.setString(1, asset_hoa);
+            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name, hoa_name FROM assets WHERE type_asset = 'P' ORDER BY hoa_name");
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 asset_nameList.add(rs.getString("asset_name"));
                 asset_idList.add(rs.getString("asset_id"));
+                asset_HoaList.add(rs.getString("hoa_name"));
             }
             for (int i = 0; i < asset_idList.size(); i++) {
-                asset_selectList.add(asset_idList.get(i) + " - " + asset_nameList.get(i));
+                asset_selectList.add("[" + asset_HoaList.get(i) + "] - " + asset_nameList.get(i) + " (" + asset_idList.get(i) + ")");
             }
 
             pstmt.close();
