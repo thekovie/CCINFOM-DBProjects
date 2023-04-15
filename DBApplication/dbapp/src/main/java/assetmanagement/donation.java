@@ -14,6 +14,7 @@ public class donation {
 
     public ArrayList<officer> officer_list = new ArrayList<>();
     public ArrayList<String> donation_pics = new ArrayList<>();
+    public ArrayList<donor> donor_list = new ArrayList<>();
 
     public class officer {
         public int officer_id;
@@ -22,8 +23,33 @@ public class donation {
         public Date officer_elect_date;
     }
 
+    public class donor {
+        public String donor_name;
+        public String donor_address;
+    }
+
     public donation() {
 
+    }
+
+    public void load_donors() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT donorname, address FROM donors");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                donor d = new donor();
+                d.donor_name = rs.getString("donorname");
+                d.donor_address = rs.getString("address");
+                donor_list.add(d);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public Boolean register_donation() {
