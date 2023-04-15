@@ -9,6 +9,7 @@ public class donation {
     public double donation_amount;
     public int accepting_officer_id;
 
+    public static Boolean existing_donator = false;
     public officer accepting_officer;
     public int donation_id;
 
@@ -52,6 +53,17 @@ public class donation {
         }
     }
 
+    public String get_donor_address(String name) {
+        String address = "";
+        load_donors();
+        for (donor d : donor_list) {
+            if (d.donor_name.equals(name)) {
+                address = d.donor_address;
+                break;
+            }
+        }
+        return address;
+    }
     public Boolean register_donation() {
         Boolean reg_status = assets.register_asset();
         Boolean donation_status = false;

@@ -100,14 +100,19 @@
             const checkbox = document.getElementById('exist_checkbox');
             const div_newdonor = document.getElementById('donor_info_div');
             const div_olddonor = document.getElementById('exist_donor_div');
-
+            var name_text = document.getElementById('donor_name');
+            var address_text = document.getElementById('donor_address');
             checkbox.addEventListener('change', (event) => {
                 if (event.target.checked) {
                     div_newdonor.style.display = 'none';
                     div_olddonor.style.display = 'block';
+                    name_text.required = false;
+                    address_text.required = false;
                 } else {
                     div_newdonor.style.display = 'block';
                     div_olddonor.style.display = 'none';
+                    name_text.required = true;
+                    address_text.required = true;
                 }
             });
         </script>
