@@ -47,7 +47,7 @@
 
         for (int i = 0; i < o.officer_list.size(); i++) {
       %>
-        <option value="<%=o.officer_list.get(i).officer_name%>"><%=o.officer_list.get(i).officer_name%></option>
+        <option value="<%=o.officer_list.get(i).officer_id%>"><%=o.officer_list.get(i).officer_name%></option>
         <%
             }
         %>

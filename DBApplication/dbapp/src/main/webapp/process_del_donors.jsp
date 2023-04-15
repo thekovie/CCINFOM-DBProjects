@@ -22,7 +22,7 @@
 
   String donorName = request.getParameter("donor_select");
   donor.donor_name = donorName;
-
+  donor.president_id = Integer.parseInt(request.getParameter("hoa_president"));
 
   Boolean check = donor.delete_donor();
 %>

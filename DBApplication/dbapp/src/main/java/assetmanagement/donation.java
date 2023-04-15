@@ -12,6 +12,9 @@ public class donation {
     public boolean donor_exists;
     public static Boolean existing_donator = false;
     public officer accepting_officer;
+
+    public officer president;
+    public int president_id;
     public int donation_id;
     public String error_msg;
 
@@ -304,8 +307,18 @@ public class donation {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("UPDATE asset_donations SET isdeleted = 1 WHERE donor_completename = ?");
-            pstmt.setString(1, donor_name);
+            list_officers();
+            for (officer o : officer_list) {
+                if (o.officer_id == president_id) {
+                    president = o;
+                    break;
+                }
+            }
+            PreparedStatement pstmt = con.prepareStatement("UPDATE asset_donations SET isdeleted = 1, approval_hoid = ?, approval_position = ?, approval_electiondate = ? WHERE donor_completename = ?");
+            pstmt.setInt(1, president.officer_id);
+            pstmt.setString(2, president.officer_position);
+            pstmt.setDate(3, president.officer_elect_date);
+            pstmt.setString(4, donor_name);
             pstmt.executeUpdate();
             isDeleted = true;
             pstmt.close();
