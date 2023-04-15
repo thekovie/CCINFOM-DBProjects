@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: johnn
-  Date: 10/04/2023
-  Time: 11:36 am
+  Date: 15/04/2023
+  Time: 10:36 pm
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -20,27 +20,17 @@
 <jsp:useBean id="asset" class="assetmanagement.assets" scope="session"/>
 <jsp:useBean id="donate" class="assetmanagement.donation" scope="session"/>
 <%
-    String donorName = request.getParameter("donor_name");
-    String donorAddress = request.getParameter("donor_address");
+
     double donorAmount = Double.parseDouble(request.getParameter("donor_amount"));
     int acceptingOfficer = Integer.parseInt(request.getParameter("accepting_officer"));
     String[] donationPics = request.getParameterValues("donation_pics[]");
-    donation.existing_donator = request.getParameter("exist-checkbox") != null;
 
-    if (!donation.existing_donator) {
-        donate.donor_name = donorName;
-        donate.donor_address = donorAddress;
-    }
-    else {
-        donate.donor_name = request.getParameter("donor_id");
-        donate.donor_address = donate.get_donor_address(donate.donor_name);
-    }
     donate.donation_amount = donorAmount;
     donate.accepting_officer_id = acceptingOfficer;
     donate.donation_pics.addAll(Arrays.asList(donationPics));
 
 
-    Boolean check = donate.register_donation();
+    Boolean check = donate.update_donation();
 %>
 
 <div class="container">
@@ -49,9 +39,8 @@
             if (check) {
         %>
         <h1 class="h1-welcome" style="color: rgba(28, 166, 25, 0.737);">Registration Successful!</h1>
-        <p>Your registration process is complete!</p>
-        <p><b>Registered Asset ID: </b><%=assets.asset_id%></p>
-        <p><b>Registered Donation ID: </b><%=donate.donation_id%></p>
+        <p>Your update process is complete!</p>
+        <p><b>Donation ID: </b><%=donate.donation_id%></p>
         <%
         } else {
         %>
@@ -83,3 +72,4 @@
 </footer>
 </body>
 </html>
+

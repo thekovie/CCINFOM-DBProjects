@@ -95,7 +95,7 @@
         %>
         <h1 class="h1-welcome" style="color: rgba(28, 166, 25, 0.737);">Update Successful!</h1>
         <p>Your asset update process is complete!</p>
-        <p><b>Registered Asset ID: </b><%=asset.asset_id%></p>
+        <p><b>Asset ID: </b><%=asset.asset_id%></p>
         <%
         } else {
         %>

@@ -180,6 +180,22 @@ public class donation {
         return  reg_status && donation_status;
     }
 
+    public Boolean update_donation() {
+        Boolean isUpdated = false;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            // Enter code here
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return isUpdated;
+    }
+
 
     public void list_officers() {
         try {
