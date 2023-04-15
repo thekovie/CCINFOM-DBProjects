@@ -24,18 +24,36 @@
         <h2>Record your Donation</h2>
         <p style="color: crimson;">*Fill up the required fields</p>
         <form action="donation_process.jsp" method="post" onsubmit="return validateFilenames()">
-            <h3>Donor Information</h3>
-            <label for="donor_name">Full Name:</label><br>
-            <input type="text" id="donor_name" name="donor_name" placeholder="Full Name" maxlength="45" required><br>
-            <label for="donor_address">Address:</label><br>
-            <textarea id="donor_address" name="donor_address" placeholder="Home Address" rows="4" cols="50" maxlength="100" required></textarea><br>
+            <label for="exist_checkbox"><b>Donator Status:</b></label><br> 
+            <label><input type="checkbox" name="exist-checkbox" id="exist_checkbox">Existing donator</label><br><br>
+            <div id ="exist_donor_div" style="display: none;">
+                <label for="donor_id">Donor:</label><br>
+                <select id="donor_id" name="donor_id">
+                    <%
+                        donation e = new donation();
+                        e.load_donors();
+
+                        for (int i = 0; i < e.donor_list.size(); i++) {
+                    %>
+                    <option value="<%= e.donor_list.get(i).donor_name %>"><%=e.donor_list.get(i).donor_name%></option>
+                    <%
+                        }
+                    %>
+                </select><br>
+            </div>
+            <div id="donor_info_div">
+                <h3>Donor Information</h3>
+                <label for="donor_name">Full Name:</label><br>
+                <input type="text" id="donor_name" name="donor_name" placeholder="Full Name" maxlength="45" required><br>
+                <label for="donor_address">Address:</label><br>
+                <textarea id="donor_address" name="donor_address" placeholder="Home Address" rows="4" cols="50" maxlength="100" required></textarea><br>
+            </div>
             <h3>Donation Information</h3>
             <label for="donor_amount">Amount Donated:</label><br>
             <input type="number" id="donor_amount" name="donor_amount" placeholder="Amount Donated" min="0" required><br>
             <div id="donate-proof-fields">
                 <label for="donation_pics">Proof of Donation:</label><br>
                 <input type="text" id="donation_pics" name="donation_pics[]" placeholder="Enter filename with image or PDF extension" maxlength="45" required>
-
             </div>
             <button type="button" onclick="addFilename()">Add Another File</button><br>
             <label for="accepting_officer">Accepting Officer:</label><br>
@@ -78,6 +96,20 @@
                 }
                 return true;
             }
+
+            const checkbox = document.getElementById('exist_checkbox');
+            const div_newdonor = document.getElementById('donor_info_div');
+            const div_olddonor = document.getElementById('exist_donor_div');
+
+            checkbox.addEventListener('change', (event) => {
+                if (event.target.checked) {
+                    div_newdonor.style.display = 'none';
+                    div_olddonor.style.display = 'block';
+                } else {
+                    div_newdonor.style.display = 'block';
+                    div_olddonor.style.display = 'none';
+                }
+            });
         </script>
     </div>
     <div class="logo-right">
