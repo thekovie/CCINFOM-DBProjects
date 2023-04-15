@@ -25,12 +25,12 @@
     <h1 class="h1-welcome">Assets</h1>
     <h2>Update Donation</h2>
 
-    <form action="update_asset.jsp">
+    <form action="update_donation.jsp">
       <label for="donator_select">Select Donation:</label><br>
       <select id="donator_select" name="asset_select">
         <%
             donation d = new donation();
-            d.load_donationinfo();
+            d.load_donationlist();
           for (int i = 0; i < d.donation_list.size(); i++) {
         %>
         <option value="<%=d.donor_idList.get(i)%>"><%=d.donation_list.get(i)%></option>
