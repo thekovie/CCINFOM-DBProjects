@@ -188,9 +188,45 @@ public class donation {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            // Enter code here
+            list_officers();
+            // get accepting officer
+            for (officer o : officer_list) {
+                if (o.officer_id == accepting_officer_id) {
+                    accepting_officer = o;
+                    break;
+                }
+            }
+
+            // update asset_donations table
+            PreparedStatement pstmt = con.prepareStatement("UPDATE asset_donations SET accept_hoid = ?, accept_position = ?, accept_electiondate = ? WHERE donation_id = ?");
+            pstmt.setInt(1, accepting_officer.officer_id);
+            pstmt.setString(2, accepting_officer.officer_position);
+            pstmt.setDate(3, accepting_officer.officer_elect_date);
+            pstmt.setInt(4, donation_id);
+            pstmt.executeUpdate();
+
+            // update donated_assets table
+            pstmt = con.prepareStatement("UPDATE donated_assets SET amount_donated = ? WHERE donation_id = ?");
+            pstmt.setDouble(1, donation_amount);
+            pstmt.setInt(2, donation_id);
+            pstmt.executeUpdate();
+
+            // update donation_pictures table
+            pstmt = con.prepareStatement("DELETE FROM donation_pictures WHERE donation_id = ?");
+            pstmt.setInt(1, donation_id);
+            pstmt.executeUpdate();
+            if (donation_pics.size() > 0)
+                for (String pic : donation_pics) {
+                    pstmt = con.prepareStatement("INSERT INTO donation_pictures (donation_id, picturefile) VALUES(?, ?)");
+                    pstmt.setInt(1, donation_id);
+                    pstmt.setString(2, donation_id + "-" + pic);
+                    pstmt.executeUpdate();
+                }
+
+            isUpdated = true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
+//            error_msg = e.getMessage();
         }
 
         return isUpdated;
@@ -286,7 +322,7 @@ public class donation {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                donation_pics.add(rs.getString("picturefile"));
+                donation_pics.add(rs.getString("picturefile").substring(rs.getString("picturefile").indexOf("-") + 1));
             }
 
             pstmt.close();

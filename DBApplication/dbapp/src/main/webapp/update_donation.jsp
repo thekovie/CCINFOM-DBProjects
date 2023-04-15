@@ -27,7 +27,7 @@
         <h1 class="h1-welcome">Donation</h1>
         <h2>Update your Donation</h2>
         <p style="color: crimson;">*Fill up the required fields</p>
-        <form action="donation_process.jsp" method="post" onsubmit="return validateFilenames()">
+        <form action="process_upd_donation.jsp" method="post" onsubmit="return validateFilenames()">
             <div id="donor_info_div">
                 <h3>Donor Information</h3>
                 <label for="donor_name">Full Name:</label><br>
@@ -37,7 +37,7 @@
             </div>
             <h3>Donation Information</h3>
             <label for="donation_id">Donation ID:</label><br>
-            <input type="text" id="donation_id" name="donation_id" placeholder="Donation ID" maxlength="45" value="<%=a.donation_id%>" disabled><br>
+            <input type="text" id="donation_id" name="donation_id" placeholder="Donation ID" maxlength="45" value="<%=a.donation_id%>" readonly><br>
             <label for="donor_amount">Amount Donated:</label><br>
             <input type="number" id="donor_amount" name="donor_amount" placeholder="Amount Donated" min="0" value="<%=a.donation_amount%>" required><br>
             <div id="donate-proof-fields">

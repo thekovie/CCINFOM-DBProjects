@@ -25,6 +25,7 @@
     int acceptingOfficer = Integer.parseInt(request.getParameter("accepting_officer"));
     String[] donationPics = request.getParameterValues("donation_pics[]");
 
+    donate.donation_id = Integer.parseInt(request.getParameter("donation_id"));
     donate.donation_amount = donorAmount;
     donate.accepting_officer_id = acceptingOfficer;
     donate.donation_pics.addAll(Arrays.asList(donationPics));
