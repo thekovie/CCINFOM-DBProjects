@@ -12,8 +12,11 @@ public class donation {
     public boolean donor_exists;
     public static Boolean existing_donator = false;
     public officer accepting_officer;
+
+    public officer president;
+    public int president_id;
     public int donation_id;
-    public String donation_asset;
+    public String error_msg;
 
 
     public ArrayList<officer> officer_list = new ArrayList<>();
@@ -45,7 +48,7 @@ public class donation {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT donorname, address FROM donors");
+            PreparedStatement pstmt = con.prepareStatement("SELECT DISTINCT d.donorname, d.address FROM donors d JOIN asset_donations ad ON d.donorname = ad.donor_completename WHERE ad.isdeleted = 0");
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 donor d = new donor();
@@ -263,7 +266,7 @@ public class donation {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT a.asset_name, ad.donor_completename, ad.donation_id  FROM donated_assets da JOIN assets a ON da.asset_id = a.asset_id JOIN asset_donations ad ON da.donation_id = ad.donation_id");
+            PreparedStatement pstmt = con.prepareStatement("SELECT a.asset_name, ad.donor_completename, ad.donation_id  FROM donated_assets da JOIN assets a ON da.asset_id = a.asset_id JOIN asset_donations ad ON da.donation_id = ad.donation_id WHERE ad.isdeleted = 0");
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -333,6 +336,58 @@ public class donation {
         }
     }
 
+    public Boolean delete_donor() {
+        Boolean isDeleted = false;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            list_officers();
+            for (officer o : officer_list) {
+                if (o.officer_id == president_id) {
+                    president = o;
+                    break;
+                }
+            }
+            PreparedStatement pstmt = con.prepareStatement("UPDATE asset_donations SET isdeleted = 1, approval_hoid = ?, approval_position = ?, approval_electiondate = ? WHERE donor_completename = ?");
+            pstmt.setInt(1, president.officer_id);
+            pstmt.setString(2, president.officer_position);
+            pstmt.setDate(3, president.officer_elect_date);
+            pstmt.setString(4, donor_name);
+            pstmt.executeUpdate();
+            isDeleted = true;
+            pstmt.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            error_msg = e.getMessage();
+        }
+
+        return isDeleted;
+    }
+
+    public void load_presidents() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT o.ho_id, o.position, o.election_date, CONCAT(p.firstname, ' ', p.lastname) AS fullname FROM officer o JOIN people p ON p.peopleid = o.ho_id WHERE o.end_date >= NOW() AND o.position = 'President'");
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                officer o = new officer();
+                o.officer_id = rs.getInt("ho_id");
+                o.officer_position = rs.getString("position");
+                o.officer_elect_date = rs.getDate("election_date");
+                o.officer_name = rs.getString("fullname");
+                officer_list.add(o);
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            error_msg = e.getMessage();
+        }
+    }
 
 
     public static void main(String[] args) {
