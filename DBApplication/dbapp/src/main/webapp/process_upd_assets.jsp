@@ -73,7 +73,19 @@
     asset.asset_rent = rent_status;
     asset.asset_room_id = roomName;
 
-    Boolean check = asset.update_asset();
+    Boolean canUpdate = true;
+    Boolean check = false;
+
+    if (assetStatus.equals("S")) {
+        if (!asset.canForDisposal()) {
+            canUpdate = false;
+            asset.error_msg = "Asset cannot be set to For Disposal as it is currently enclosing an asset.";
+        }
+    }
+
+    if (canUpdate) {
+        check = asset.update_asset();
+    }
 %>
 
 <div class="container">
@@ -83,7 +95,7 @@
         %>
         <h1 class="h1-welcome" style="color: rgba(28, 166, 25, 0.737);">Update Successful!</h1>
         <p>Your asset update process is complete!</p>
-        <p><b>Registered Asset ID: </b><%=asset.asset_id%></p>
+        <p><b>Asset ID: </b><%=asset.asset_id%></p>
         <%
         } else {
         %>

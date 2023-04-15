@@ -7,21 +7,20 @@ import java.util.*;
 import java.sql.*;
 
 public class assets {
-    public int asset_id;
-    public String asset_name;
-    public String asset_type;
-    public String asset_description;
-    public Date asset_acq_date;
-    public Boolean asset_rent;
-    public double asset_value;
-    public String asset_status;
-    public double asset_longitude;
-    public double asset_latitude;
-    public String asset_hoa;
-    public String error_msg;
-    public String asset_rent_status;
-    public String asset_room_id;
-
+    public static int asset_id;
+    public static String asset_name;
+    public static String asset_type;
+    public static String asset_description;
+    public static Date asset_acq_date;
+    public static Boolean asset_rent;
+    public static double asset_value;
+    public static String asset_status;
+    public static double asset_longitude;
+    public static double asset_latitude;
+    public static String asset_hoa;
+    public static String error_msg;
+    public static String asset_rent_status;
+    public static String asset_room_id;
 
     public ArrayList<String> asset_HoaList = new ArrayList<String>();
     public ArrayList<String> asset_nameList = new ArrayList<String>();
@@ -34,11 +33,11 @@ public class assets {
 
     }
 
-    public boolean register_asset() {
+    public static boolean register_asset() {
         try {
             // Connect to database online
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             // Get Latest Asset ID
@@ -49,6 +48,18 @@ public class assets {
                 asset_id = rs.getInt("newID");
             }
 
+            // check if asset hoa name is the same as room hoa name
+            if (!asset_room_id.equals("null")) {
+                pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
+                pstmt.setInt(1, Integer.parseInt(asset_room_id));
+                rs = pstmt.executeQuery();
+                while (rs.next()) {
+                    if (!rs.getString("hoa_name").equals(asset_hoa)) {
+                        error_msg = "The enclosing asset doesn't belong to the same HOA as the asset";
+                        return false;
+                    }
+                }
+            }
 
             // Insert new asset
             pstmt = con.prepareStatement("INSERT INTO assets(asset_id, asset_name, asset_description, acquisition_date, forrent, asset_value, type_asset, status, loc_lattitude, loc_longiture, hoa_name, enclosing_asset) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -89,12 +100,24 @@ public class assets {
         try {
             // Connect to database online
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
 
+            PreparedStatement pstmt;
+            // check if asset hoa name is the same as room hoa name
+            pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
+            pstmt.setInt(1, Integer.parseInt(asset_room_id));
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                if (!rs.getString("hoa_name").equals(asset_hoa)) {
+                    error_msg = "The enclosing asset doesn't belong to the same HOA.";
+                    return false;
+                }
+            }
+
             // Insert new asset
-            PreparedStatement pstmt = con.prepareStatement("UPDATE assets SET asset_name = ?, asset_description = ?, acquisition_date = ?, forrent = ?, asset_value = ?, type_asset = ?, status = ?, loc_lattitude = ?, loc_longiture = ?, hoa_name = ?, enclosing_asset = ? WHERE asset_id = ?");
+            pstmt = con.prepareStatement("UPDATE assets SET asset_name = ?, asset_description = ?, acquisition_date = ?, forrent = ?, asset_value = ?, type_asset = ?, status = ?, loc_lattitude = ?, loc_longiture = ?, hoa_name = ?, enclosing_asset = ? WHERE asset_id = ?");
             pstmt.setString(1, asset_name);
             pstmt.setString(2, asset_description);
             pstmt.setDate(3, asset_acq_date);
@@ -114,6 +137,13 @@ public class assets {
 
             pstmt.executeUpdate();
 
+            // Remove enclosing asset if asset is disposed
+            if (asset_status.equals("X")) {
+                pstmt = con.prepareStatement("UPDATE assets SET enclosing_asset = NULL WHERE asset_id= ?");
+                pstmt.setInt(1, asset_id);
+                pstmt.executeUpdate();
+            }
+
             System.out.println("Asset Update Successfully");
 
             pstmt.close();
@@ -132,7 +162,7 @@ public class assets {
         try {
 
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT hoa_name FROM hoa");
@@ -154,7 +184,7 @@ public class assets {
     public void load_assets() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets");
@@ -182,7 +212,7 @@ public class assets {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT * FROM assets WHERE asset_id = ?");
@@ -237,10 +267,10 @@ public class assets {
         }
     }
 
-    public Boolean delete_asset() {
+    public static Boolean delete_asset() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM assets WHERE asset_id = ?");
@@ -263,7 +293,7 @@ public class assets {
     public void load_del_assets() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE asset_id NOT IN(SELECT asset_id FROM asset_transactions) AND asset_id NOT IN(SELECT enclosing_asset FROM assets WHERE enclosing_asset IN(SELECT asset_id FROM assets))");
@@ -287,18 +317,19 @@ public class assets {
     public void load_rooms() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "12345678");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE type_asset = 'P'");
+            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name, hoa_name FROM assets WHERE type_asset = 'P' ORDER BY hoa_name");
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 asset_nameList.add(rs.getString("asset_name"));
                 asset_idList.add(rs.getString("asset_id"));
+                asset_HoaList.add(rs.getString("hoa_name"));
             }
             for (int i = 0; i < asset_idList.size(); i++) {
-                asset_selectList.add(asset_idList.get(i) + " - " + asset_nameList.get(i));
+                asset_selectList.add("[" + asset_HoaList.get(i) + "] - " + asset_nameList.get(i) + " (" + asset_idList.get(i) + ")");
             }
 
             pstmt.close();
@@ -322,6 +353,43 @@ public class assets {
         } else {
             return false;
         }
+    }
+
+    public Boolean canForDisposal() {
+        Boolean canForDisposal = false;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT enclosing_asset FROM assets WHERE asset_id = ?");
+            pstmt.setInt(1, asset_id);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getString("enclosing_asset") != null) {
+                    canForDisposal = true;
+                }
+            }
+
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return canForDisposal;
+    }
+
+    public Boolean canDispose() {
+        Boolean canDispose = false;
+
+        if (asset_status.equals("for_disposal")) {
+            canDispose = true;
+        }
+
+        return canDispose;
     }
     public static void main(String args[]) {
 //        assets a = new assets();

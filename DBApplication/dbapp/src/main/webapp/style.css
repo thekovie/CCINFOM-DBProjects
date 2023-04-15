@@ -111,7 +111,7 @@ select {
 
 
 input {
-    width: 80%;
+    width: 60%;
     font-family: Poppins, sans-serif;
     padding: 12px 20px;
     margin: 8px 0;
@@ -126,6 +126,8 @@ input:focus {
     outline: none;
 }
 
+
+
 input[type="button"]{
     width: 10%;
     background-color: #3A98B9;
@@ -137,7 +139,9 @@ input[type="button"]{
     cursor: pointer;
 }
 
-input[type="radio"] {
+
+
+input[type="checkbox"]  {
     width: 7%;
     background-color: #3A98B9;
     color: white;

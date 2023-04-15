@@ -30,10 +30,18 @@
         double loc_lat = Double.parseDouble(request.getParameter("asset_loc_lat"));
         String hoaName = request.getParameter("hoa_name");
         String roomName = request.getParameter("select_room");
+        String donateCheck = request.getParameter("donation-check");
+
+        System.out.println(donateCheck);
 
         Boolean rentStatusBool = false;
         if (rentStatus.equals("for_rent")) {
             rentStatusBool = true;
+        }
+
+        Boolean donateStatusBool = false;
+        if (donateCheck != null) {
+            donateStatusBool = true;
         }
 
 
@@ -68,7 +76,12 @@
         asset.asset_hoa = hoaName;
         asset.asset_room_id = roomName;
 
-        Boolean check = asset.register_asset();
+        Boolean check = false;
+        if (donateStatusBool) {
+            response.sendRedirect("record_donation.jsp");
+        } else {
+             check = asset.register_asset();
+        }
     %>
 
     <div class="container">
