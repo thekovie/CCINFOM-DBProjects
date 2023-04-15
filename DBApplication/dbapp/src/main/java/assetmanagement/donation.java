@@ -8,7 +8,7 @@ public class donation {
     public String donor_address;
     public double donation_amount;
     public int accepting_officer_id;
-
+    public boolean donor_exists;
     public static Boolean existing_donator = false;
     public officer accepting_officer;
     public int donation_id;
@@ -89,11 +89,21 @@ public class donation {
             }
             String firstName = donor_name.split(" ")[0].toLowerCase();
 
-            // fill donors table
-            pstmt = con.prepareStatement("INSERT INTO donors (donorname, address) VALUES(?, ?)");
+            // check if donor exists
+            pstmt = con.prepareStatement("SELECT donorname FROM donors WHERE donorname = ?");
             pstmt.setString(1, donor_name);
-            pstmt.setString(2, donor_address);
-            pstmt.executeUpdate();
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                donor_exists = true;
+            }
+
+            // fill donors table
+            if (!donor_exists) {
+                pstmt = con.prepareStatement("INSERT INTO donors (donorname, address) VALUES(?, ?)");
+                pstmt.setString(1, donor_name);
+                pstmt.setString(2, donor_address);
+                pstmt.executeUpdate();
+            }
 
             // fill asset_donations table
             pstmt = con.prepareStatement("INSERT INTO asset_donations (donation_id, donor_completename, donation_formfile, date_donation, accept_hoid, accept_position, accept_electiondate, isdeleted) VALUES(?, ?, ?, ?, ?, ?, ?, 0)");
@@ -121,7 +131,7 @@ public class donation {
                     pstmt.setString(2, donation_id + "-" + pic);
                     pstmt.executeUpdate();
                 }
-
+            donation_pics.clear();
             donation_status = true;
             pstmt.close();
             con.close();
@@ -132,12 +142,8 @@ public class donation {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
                 System.out.println("Connected to database");
-
-                PreparedStatement pstmt = con.prepareStatement("DELETE FROM donors WHERE donorname = ?");
-                pstmt.setString(1, donor_name);
-                pstmt.executeUpdate();
-
-                pstmt = con.prepareStatement("DELETE FROM asset_donations WHERE donation_id = ?");
+                PreparedStatement pstmt;
+                pstmt = con.prepareStatement("DELETE FROM donation_pictures WHERE donation_id = ?");
                 pstmt.setInt(1, donation_id);
                 pstmt.executeUpdate();
 
@@ -145,7 +151,13 @@ public class donation {
                 pstmt.setInt(1, donation_id);
                 pstmt.executeUpdate();
 
-                pstmt = con.prepareStatement("DELETE FROM donation_pictures WHERE donation_id = ?");
+                if (!donor_exists) {
+                    pstmt = con.prepareStatement("DELETE FROM donors WHERE donorname = ?");
+                    pstmt.setString(1, donor_name);
+                    pstmt.executeUpdate();
+                }
+
+                pstmt = con.prepareStatement("DELETE FROM asset_donations WHERE donation_id = ?");
                 pstmt.setInt(1, donation_id);
                 pstmt.executeUpdate();
 
