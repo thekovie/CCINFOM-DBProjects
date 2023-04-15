@@ -1,5 +1,6 @@
 package assetmanagement;
 
+import javax.lang.model.type.ArrayType;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -8,13 +9,16 @@ public class donation {
     public String donor_address;
     public double donation_amount;
     public int accepting_officer_id;
-
     public officer accepting_officer;
     public int donation_id;
+    public String donation_asset;
 
     public ArrayList<officer> officer_list = new ArrayList<>();
     public ArrayList<String> donation_pics = new ArrayList<>();
     public ArrayList<donor> donor_list = new ArrayList<>();
+    public ArrayList<Integer> donor_idList = new ArrayList<>();
+    public ArrayList<String> donor_name_list = new ArrayList<>();
+    public ArrayList<String> donation_list = new ArrayList<>();
 
     public class officer {
         public int officer_id;
@@ -23,7 +27,7 @@ public class donation {
         public Date officer_elect_date;
     }
 
-    public class donor {
+    public static class donor {
         public String donor_name;
         public String donor_address;
     }
@@ -168,6 +172,27 @@ public class donation {
                 o.officer_name = rs.getString("fullname");
                 officer_list.add(o);
             }
+            pstmt.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void load_donationinfo() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            System.out.println("Connected to database");
+
+            PreparedStatement pstmt = con.prepareStatement("SELECT a.asset_name, ad.donor_completename, ad.donation_id  FROM donated_assets da JOIN assets a ON da.asset_id = a.asset_id JOIN asset_donations ad ON da.donation_id = ad.donation_id");
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                donation_list.add(rs.getString("asset_name") + " - " + rs.getString("donor_completename").split(" ")[0]);
+                donor_idList.add(rs.getInt("donation_id"));
+            }
+
             pstmt.close();
             con.close();
         } catch (Exception e) {
