@@ -48,6 +48,16 @@ public class assets {
                 asset_id = rs.getInt("newID");
             }
 
+            // check if asset hoa name is the same as room hoa name
+            pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
+            pstmt.setInt(1, Integer.parseInt(asset_room_id));
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                if (!rs.getString("hoa_name").equals(asset_hoa)) {
+                    error_msg = "Asset HOA name does not match room HOA name";
+                    return false;
+                }
+            }
 
             // Insert new asset
             pstmt = con.prepareStatement("INSERT INTO assets(asset_id, asset_name, asset_description, acquisition_date, forrent, asset_value, type_asset, status, loc_lattitude, loc_longiture, hoa_name, enclosing_asset) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -90,10 +100,20 @@ public class assets {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
-
+            PreparedStatement pstmt;
+            // check if asset hoa name is the same as room hoa name
+            pstmt = con.prepareStatement("SELECT hoa_name FROM assets WHERE asset_id = ?");
+            pstmt.setInt(1, Integer.parseInt(asset_room_id));
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                if (!rs.getString("hoa_name").equals(asset_hoa)) {
+                    error_msg = "Asset HOA name does not match room HOA name";
+                    return false;
+                }
+            }
 
             // Insert new asset
-            PreparedStatement pstmt = con.prepareStatement("UPDATE assets SET asset_name = ?, asset_description = ?, acquisition_date = ?, forrent = ?, asset_value = ?, type_asset = ?, status = ?, loc_lattitude = ?, loc_longiture = ?, hoa_name = ?, enclosing_asset = ? WHERE asset_id = ?");
+            pstmt = con.prepareStatement("UPDATE assets SET asset_name = ?, asset_description = ?, acquisition_date = ?, forrent = ?, asset_value = ?, type_asset = ?, status = ?, loc_lattitude = ?, loc_longiture = ?, hoa_name = ?, enclosing_asset = ? WHERE asset_id = ?");
             pstmt.setString(1, asset_name);
             pstmt.setString(2, asset_description);
             pstmt.setDate(3, asset_acq_date);
@@ -296,8 +316,8 @@ public class assets {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE type_asset = 'P' AND hoa_name = ?");
-            pstmt.setString(1, asset_hoa);
+            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id, asset_name FROM assets WHERE type_asset = 'P'/* AND hoa_name = ?*/");
+//            pstmt.setString(1, asset_hoa);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
