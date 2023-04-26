@@ -109,8 +109,9 @@
                         <label for="donor_amount">Amount Donated:</label><br>
                         <input type="number" class="form-control" id="donor_amount" name="donor_amount" placeholder="Amount Donated" min="0" required><br>
                         <div id="donate-proof-fields">
-                            <label for="donation_pics">Proof of Donation:</label><br>
-                            <input type="text" class="form-control m-input" id="donation_pics" name="donation_pics[]" placeholder="Enter filename with image or PDF extension" maxlength="45" required>
+                            <label for="donation_pics">Proof of Donation:</label>
+                            <small class="form-text text-muted">*Enter filename with image or PDF extension</small><br>
+                            <input type="text" class="form-control m-input" id="donation_pics" name="donation_pics[]" placeholder="Enter filename" maxlength="45" required>
                         </div><br>
                         <button type="button" class="btn btn-info" onclick="addFilename()">Add Another File</button><br><br>
                         <label for="accepting_officer">Accepting Officer:</label><br>
@@ -148,7 +149,7 @@
         const container = document.getElementById("donate-proof-fields");
         const newField = document.createElement("div");
         newField.innerHTML = '<div id="row"><div class="input-group m-3" style="margin-left:none;">' +
-                             '<input type="text" class="form-control m-input" name="donation_pics[]" placeholder="Enter filename with image or PDF extension" maxlength="45" required>\n' +
+                             '<input type="text" class="form-control m-input" name="donation_pics[]" placeholder="Enter filename" maxlength="45" required>\n' +
                              '<button type="button" class="btn btn-danger" id="remove_field" aria-label="Close" onclick="removeField(this)"><span aria-hidden="true">&times;</span></button></div></div>';
         container.appendChild(newField);
     }
