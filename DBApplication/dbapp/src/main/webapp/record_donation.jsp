@@ -73,7 +73,7 @@
             </div>
             <div class="col">
                 <div class="form-group">
-                    <a class="return-link" href="register_asset.jsp">< Return to Asset Registration</a>
+                    <a class="btn btn-outline-info" href="register_asset.jsp">< Return to Asset Registration</a><br><br>
                     <h1>Donation</h1>
                     <h2>Record your Donation</h2>
                     <p style="color: crimson;">*Fill up the required fields</p>
@@ -138,7 +138,7 @@
     <div class="container" style="padding-top: 15px;">
         <div class="row">
             <div class="col">
-                <p class="text-center text-white">© 2021 HOA Management. CCINFOM S19 Group 7</p>
+                <p class="text-center text-white">© 2023 HOA Management. CCINFOM S19 Group 7</p>
             </div>
         </div>
     </div>
