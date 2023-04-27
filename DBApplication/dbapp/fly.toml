@@ -1,0 +1,41 @@
+# fly.toml app configuration file generated for hoa-dbapp on 2023-04-26T17:48:17+08:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = "hoa-dbapp"
+primary_region = "sin"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+
+[checks]
+  [checks.alive]
+    type = "tcp"
+    interval = "15s"
+    timeout = "2s"
+    grace_period = "5s"
+
+[build]
+  builder = "paketobuildpacks/builder:base"
+  buildpacks = ["gcr.io/paketo-buildpacks/adoptium",
+                "gcr.io/paketo-buildpacks/syft",
+                "gcr.io/paketo-buildpacks/maven",
+                "gcr.io/paketo-buildpacks/apache-tomcat",
+                "gcr.io/paketo-buildpacks/apache-tomee"]
+
+  [build.args]
+    BP_JVM_TYPE="JRE"
+    BP_JVM_VERSION="17"
+    BP_JAVA_INSTALL_NODE="false"
+    BP_MAVEN_POM_FILE="pom.xml"
+    BP_MAVEN_VERSION="3"
+
+  [env]
+    JAVA_TOOL_OPTIONS="-Xss256K -XX:MaxDirectMemorySize=2M -XX:ReservedCodeCacheSize=32M -XX:MaxMetaspaceSize=32M -Xmx32m"
+    BPL_JVM_THREAD_COUNT="100"
+    APP_ENV = "production"
+    DB_CONNECTION = "mysql"

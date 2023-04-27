@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="dbapp:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/dbapp_war2</output-path>
+    <root id="archive" name="dbapp_war.war">
+      <element id="artifact" artifact-name="dbapp:war exploded" />
+    </root>
+  </artifact>
+</component>
