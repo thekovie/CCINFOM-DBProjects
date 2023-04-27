@@ -21,7 +21,7 @@ primary_region = "sin"
 
 [build]
   builder = "paketobuildpacks/builder:base"
-  buildpacks = ["gcr.io/paketo-buildpacks/adoptium",
+  buildpacks = ["gcr.io/paketo-buildpacks/bellsoft-liberica",
                 "gcr.io/paketo-buildpacks/syft",
                 "gcr.io/paketo-buildpacks/maven",
                 "gcr.io/paketo-buildpacks/apache-tomcat",
@@ -37,5 +37,3 @@ primary_region = "sin"
   [env]
     JAVA_TOOL_OPTIONS="-Xss256K -XX:MaxDirectMemorySize=2M -XX:ReservedCodeCacheSize=32M -XX:MaxMetaspaceSize=32M -Xmx32m"
     BPL_JVM_THREAD_COUNT="100"
-    APP_ENV = "production"
-    DB_CONNECTION = "mysql"
