@@ -275,7 +275,16 @@ public class assets {
             Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
             System.out.println("Connected to database");
 
-            PreparedStatement pstmt = con.prepareStatement("DELETE FROM assets WHERE asset_id = ?");
+            // check if asset is donated or not
+            PreparedStatement pstmt = con.prepareStatement("SELECT asset_id FROM donated_assets WHERE asset_id = ?");
+            pstmt.setInt(1, asset_id);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                error_msg = "Asset is donated and cannot be deleted";
+                return false;
+            }
+
+            pstmt = con.prepareStatement("DELETE FROM assets WHERE asset_id = ?");
             pstmt.setInt(1, asset_id);
             pstmt.executeUpdate();
 
@@ -285,7 +294,7 @@ public class assets {
             con.close();
             return true;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            error_msg = e.getMessage();
         }
 
 
