@@ -10,6 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --config DBApplication/dbapp/fly.toml --remote-only
+      - run: flyctl deploy ./DBApplication/dbapp --config ./DBApplication/dbapp/fly.toml --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
