@@ -13,3 +13,10 @@ jobs:
       - run: flyctl deploy ./DBApplication/dbapp --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          DATABASE_URL: ${{ secrets.DB_URL }}
+          DATABASE_USERNAME: ${{ secrets.DB_USER }}
+          DATABASE_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          run: 
+            export DB_URL=$DB_URL
+            export DB_USER=$DB_USER
+            export DB_PASSWORD=$DB_PASSWORD
