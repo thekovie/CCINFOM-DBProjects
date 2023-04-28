@@ -45,7 +45,7 @@ public class donation {
     public void load_donors() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT DISTINCT d.donorname, d.address FROM donors d JOIN asset_donations ad ON d.donorname = ad.donor_completename WHERE ad.isdeleted = 0");
@@ -79,7 +79,7 @@ public class donation {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             // get donation id
@@ -149,7 +149,7 @@ public class donation {
             assets.error_msg = e.getMessage();
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+                Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
                 System.out.println("Connected to database");
                 PreparedStatement pstmt;
                 pstmt = con.prepareStatement("DELETE FROM donation_pictures WHERE donation_id = ?");
@@ -188,7 +188,7 @@ public class donation {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             list_officers();
@@ -239,7 +239,7 @@ public class donation {
     public void list_officers() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT o.ho_id, o.position, o.election_date, CONCAT(p.firstname, ' ', p.lastname) AS fullname FROM officer o JOIN people p ON p.peopleid = o.ho_id WHERE o.end_date >= NOW()");
@@ -263,7 +263,7 @@ public class donation {
     public void load_donationlist() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT a.asset_name, ad.donor_completename, ad.donation_id  FROM donated_assets da JOIN assets a ON da.asset_id = a.asset_id JOIN asset_donations ad ON da.donation_id = ad.donation_id WHERE ad.isdeleted = 0");
@@ -284,7 +284,7 @@ public class donation {
     public void load_donationinfo(String donationId) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             PreparedStatement pstmt;
@@ -340,7 +340,7 @@ public class donation {
         Boolean isDeleted = false;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             list_officers();
@@ -369,7 +369,7 @@ public class donation {
     public void load_presidents() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection("jdbc:mysql://hoa.cwxgaovkt2sy.ap-southeast-2.rds.amazonaws.com/HOADB", "root", "kVgdrBtq7oGs^S");
+            Connection con = DriverManager.getConnection(assets.url, assets.user, assets.password);
             System.out.println("Connected to database");
 
             PreparedStatement pstmt = con.prepareStatement("SELECT o.ho_id, o.position, o.election_date, CONCAT(p.firstname, ' ', p.lastname) AS fullname FROM officer o JOIN people p ON p.peopleid = o.ho_id WHERE o.end_date >= NOW() AND o.position = 'President'");
