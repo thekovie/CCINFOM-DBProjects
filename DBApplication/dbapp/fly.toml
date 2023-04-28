@@ -37,7 +37,7 @@ primary_region = "sin"
   [env]
     JAVA_TOOL_OPTIONS="-Xss256K -XX:MaxDirectMemorySize=2M -XX:ReservedCodeCacheSize=32M -XX:MaxMetaspaceSize=32M -Xmx32m"
     BPL_JVM_THREAD_COUNT="100"
-    DB_URL = "${{ env.DB_URL }}"
-    DB_USER = "${{ env.DB_USER }}"
-    DB_PASSWORD = "${{ env.DB_PASSWORD }}"
+    DB_URL = "DB_URL"
+    DB_USER = "DB_USER"
+    DB_PASSWORD = "DB_PASSWORD"
     
