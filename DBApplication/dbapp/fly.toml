@@ -6,11 +6,6 @@
 app = "hoa-dbapp"
 primary_region = "sin"
 
-[[deploy.env]]
-DB_URL = "${{ env.DB_URL }}"
-DB_USERNAME = "${{ env.DB_USER }}"
-DB_PASSWORD = "${{ env.DB_PASSWORD }}"
-
 [http_service]
   internal_port = 8080
   force_https = true
@@ -42,4 +37,7 @@ DB_PASSWORD = "${{ env.DB_PASSWORD }}"
   [env]
     JAVA_TOOL_OPTIONS="-Xss256K -XX:MaxDirectMemorySize=2M -XX:ReservedCodeCacheSize=32M -XX:MaxMetaspaceSize=32M -Xmx32m"
     BPL_JVM_THREAD_COUNT="100"
+    DB_URL = "${{ env.DB_URL }}"
+    DB_USER = "${{ env.DB_USER }}"
+    DB_PASSWORD = "${{ env.DB_PASSWORD }}"
     
