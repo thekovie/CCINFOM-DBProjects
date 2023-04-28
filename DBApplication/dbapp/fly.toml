@@ -7,9 +7,9 @@ app = "hoa-dbapp"
 primary_region = "sin"
 
 [[deploy.env]]
-DATABASE_URL = "${{ secrets.DB_URL }}"
-DATABASE_USERNAME = "${{ secrets.DB_USER }}"
-DATABASE_PASSWORD = "${{ secrets.DB_PASSWORD }}"
+DATABASE_URL = "${{ env.DB_URL }}"
+DATABASE_USERNAME = "${{ env.DB_USER }}"
+DATABASE_PASSWORD = "${{ env.DB_PASSWORD }}"
 
 [http_service]
   internal_port = 8080
